@@ -59,7 +59,6 @@ def new_plot_model(test_run, random_batch):
     ax[1][0].axis("equal")
     ax[1][1].axis("equal")
 
-    plt.show()
 
 
 def plot_dmd_eigs(Amat, epoch, save_folder, data_type):

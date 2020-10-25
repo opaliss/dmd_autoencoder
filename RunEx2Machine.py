@@ -3,15 +3,11 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import tensorflow as tf
-import numpy as np
 import SimpleMachine as sm
 import SimpleLoss as sl
-import Data as dt
+from data import Data as dt
 import pickle
-import matplotlib.pyplot as plt
 from tensorflow.keras.models import model_from_json
-from tensorflow.keras.models import load_model
-from tensorflow import keras
 from return_stats import print_status_bar
 from create_plots import *
 plt.rcParams['figure.figsize'] = [15, 8]
