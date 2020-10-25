@@ -60,7 +60,6 @@ def new_plot_model(test_run, random_batch):
     ax[1][1].axis("equal")
 
 
-
 def plot_dmd_eigs(Amat, epoch, save_folder, data_type):
     """ Plot the eigenvalues of the dmd amat to show stability. """
     # convert Amat to be numpy datatype.
@@ -92,11 +91,13 @@ def plot_dmd_eigs(Amat, epoch, save_folder, data_type):
 
     if data_type == "train":
         train_title = "training_eig_" + str(epoch) + "epoch"
-        plt.savefig('./Results/' + str(save_folder) + '/Train/' + train_title + '.png', facecolor=fig.get_facecolor())
+        directory = os.path.join("results", save_folder, "Train", train_title + '.png')
+        plt.savefig(directory, facecolor=fig.get_facecolor())
 
     if data_type == "test":
-        train_title = "test_eig_" + str(epoch) + "epoch"
-        plt.savefig('./Results/' + str(save_folder) + '/Test/' + train_title + '.png', facecolor=fig.get_facecolor())
+        test_title = "test_eig_" + str(epoch) + "epoch"
+        directory = os.path.join("results", save_folder, "Test", test_title + '.png')
+        plt.savefig(directory, facecolor=fig.get_facecolor())
 
 
 def create_plots(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,
@@ -157,20 +158,20 @@ def create_plots(batch_training_data, predictions_train, hyp_params, epoch, trai
                                                                      hyp_params['lr'],
                                                                      np.log10(train_loss_results[-1])))
     if data_type == "train":
-        train_title = "training_data_at_" + str(epoch) + "epoch"
-        plt.savefig('./Results/' + str(save_folder) + '/Train/' + train_title + '.png', facecolor=fig.get_facecolor())
+        train_title = "training_data_" + str(epoch) + "epoch"
+        directory = os.path.join("results", save_folder, "Train", train_title + '.png')
+        plt.savefig(directory, facecolor=fig.get_facecolor())
 
     if data_type == "test":
-        train_title = "test_data_at_" + str(epoch) + "epoch"
-        plt.savefig('./Results/' + str(save_folder) + '/Test/' + train_title + '.png', facecolor=fig.get_facecolor())
-
+        test_title = "test_data_" + str(epoch) + "epoch"
+        directory = os.path.join("results", save_folder, "Test", test_title + '.png')
+        plt.savefig(directory, facecolor=fig.get_facecolor())
     plt.close()
 
 
 def create_plots_of_loss(dmd_loss_vec_train, ae_loss_vec_train, dmd_loss_vec_test, ae_loss_vec_test,
                          pred_loss_vec_train, pred_loss_vec_test, c1, c2, c3, epoch, save_folder):
-    # create 4 plots of the ae and dmd loss.
-    # save to folder named in line 30.
+    # create 3 plots of the ae, dmd, predict loss.
     fig, ax = plt.subplots(nrows=3, ncols=1, figsize=(10, 21))
 
     rect = fig.patch
@@ -199,6 +200,7 @@ def create_plots_of_loss(dmd_loss_vec_train, ae_loss_vec_train, dmd_loss_vec_tes
     ax[2].legend()
     fig.suptitle("Loss curve for epoch = " + str(epoch))
 
-    train_title = "loss_curve_at_" + str(epoch) + "epoch"
-    plt.savefig('./Results/' + str(save_folder) + '/Loss/' + train_title + '.png', facecolor=fig.get_facecolor())
+    loss_title = "loss_curve_at_" + str(epoch) + "epoch"
+    directory = os.path.join("results", save_folder, "Loss", loss_title + ".png")
+    plt.savefig(directory, facecolor=fig.get_facecolor())
     plt.close()
