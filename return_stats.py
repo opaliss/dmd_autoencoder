@@ -5,9 +5,10 @@ import os
 import pickle
 
 
-def print_status_bar(iteration, total, loss_train, loss_test, log_file_path=None):
+def print_status_bar(iteration, total, loss_train, loss_test, run_time, log_file_path=None):
     """
     Prints on screen and can be written in a log file.
+    :param run_time: time it took to run the latest epoch.
     :param log_file_path: str with log file path. Example: "Results/oct21_ex2/log.txt"
     :param iteration: epoch number.
     :param total: total number of epoches.
@@ -16,7 +17,7 @@ def print_status_bar(iteration, total, loss_train, loss_test, log_file_path=None
     :return: print statement with current statistics.
     """
     string = str(iteration) + "/" + str(total) + " ,loss_train: " + str(loss_train.numpy()) + " , loss_test: " + \
-             str(loss_test.numpy())
+             str(loss_test.numpy()) + ", run time = " + str(run_time)
 
     if log_file_path is not None:
         with open(log_file_path, "a") as log:

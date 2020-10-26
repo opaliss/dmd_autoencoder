@@ -22,7 +22,7 @@ class DMDMachine(keras.Model):
         dmd_loss = self.get_linearity_loss(y_data=y)
 
         # predict 1 step using dmd fit.
-        Amat, y_pred = self.compute_pred_batch_mat(y_data_mat=y)
+        y_pred = self.compute_pred_batch_mat(y_data_mat=y)
 
         # dmd predict loss in latent space.
         pred_loss = self.pred_loss(y_pred, y)
@@ -30,8 +30,8 @@ class DMDMachine(keras.Model):
         # ae reconstruction loss.
         ae_loss = self.ae_loss_term(input_data=input, x_ae=x_ae)
     
-        return [x_ae, y, dmd_loss, ae_loss, y_pred, Amat, pred_loss]
-
+        return [x_ae, y, dmd_loss, ae_loss, y_pred, pred_loss]
+    
     def get_config(self):
         base_config = super().get_config()
         return {**base_config,
@@ -47,17 +47,6 @@ class DMDMachine(keras.Model):
     @staticmethod
     def ae_loss_term(input_data, x_ae):
         return tf.reduce_mean(keras.losses.MSE(input_data[:, :, 0], x_ae[:, :, 0]))
-    
-    @staticmethod
-    def weight_manager(aeweights):
-        """ autoencoder weights. """
-        aeflat = np.array([])
-
-        for jj in range(len(aeweights)):
-            aeflat = np.concatenate((aeflat, aeweights[jj].flatten()))
-
-        aenorm = np.linalg.norm(aeflat)
-        return aenorm
 
     @staticmethod
     def compute_svd(mat_data):
@@ -83,45 +72,42 @@ class DMDMachine(keras.Model):
         I = tf.eye(V.shape[0])  # identity matrix
         VVt = tf.linalg.matmul(V, tf.transpose(V))  # V * V transpose
         loss_mat = tf.linalg.matmul(y_plus, (I - VVt))
-        fro_norm = self.frobenius_norm(loss_mat)  # frobenius norm squared.
-        return fro_norm
+        return self.frobenius_norm(loss_mat)
 
     @staticmethod
     def frobenius_norm(mat):
-        """frobenius norm implements with tensor"""
+        """frobenius norm implements with tensor."""
         return tf.linalg.trace(tf.matmul(mat, tf.transpose(mat)))
 
+    
     def get_linearity_loss(self, y_data):
-        """ return the sum of the dmd linearity loss of each batch.
+        """ return the average dmd loss for each initial condition in the batch. 
         :param y_data: encoder output.
         """
-        #         for ii in range(y_data.shape[0]):
-        #             y_minus = self.y_minus(y_data[ii])
-        #             y_plus = self.y_plus(y_data[ii])
-        #             dmd_loss += self.dmd_loss(y_minus, y_plus)
-        #             dmd_loss/ y_data.shape[0]
+        dmd_loss = 0 
+        for ii in range(y_data.shape[0]):
+            y_minus = self.y_minus(y_data[ii])
+            y_plus = self.y_plus(y_data[ii])
+            dmd_loss += self.dmd_loss(y_minus, y_plus)
+        return dmd_loss/ y_data.shape[0]
 
-        reshape_y = tf.convert_to_tensor(self.windowing(y_data.numpy()), dtype=tf.float32)
-        y_minus = self.y_minus(reshape_y)
-        y_plus = self.y_plus(reshape_y)
-       
-        return self.dmd_loss(y_minus, y_plus)
 
-    @staticmethod
-    def get_amat(y_data):
+    def get_amat(self, y_data):
         """ Compute DMD Amat:
-        X = [x1, x2, x3, .., xm]
-        X+ = [x2, x3, x4, .., xm]
-        X- = [x1, x2, .., xm-1]
         Amat = X+ * pseudoinverse(X-)
-
-        X - dim (features, timesteps)
-        Ex2: n = 2, m = 51
         """
-        x_plus = y_data[:, 1:]
-        x_minus = y_data[:, :-1]
+        y_plus = self.y_plus(y_data)
+        y_minus = self.y_minus(y_data)
+        
+        # singular value decomposition.
+        u, s, vh = np.linalg.svd(y_minus, full_matrices=False)
+        u, vh = np.matrix(u), np.matrix(vh)
 
-        return np.matmul(x_plus, np.linalg.pinv(x_minus))
+        # compute Atilde.
+        Atilde = y_plus @ vh.H
+        Atilde = Atilde @ np.diag(1. / s)
+        Atilde = Atilde @ u.H
+        return Atilde
 
     def get_predicted_y(self, y_data):
         """ Get predicted y_data.
@@ -134,13 +120,9 @@ class DMDMachine(keras.Model):
         y_pred = np.zeros((y_data.shape[0], y_data.shape[1]))
         y_pred[:, 0] = y_data[:, 0]
         Amat = self.get_amat(y_data)
-        Amat_exp = Amat
-        for ii in range(y_data.shape[1]):
-            if ii != 0:
-                Amat_exp = np.matmul(Amat_exp, Amat)
-            y_pred[:, ii] = np.matmul(Amat_exp, y_pred[:, 0])
-            
-        return Amat, y_pred
+        for ii in range(1, y_data.shape[1]):
+            y_pred[:, ii] = Amat**ii @ y_pred[:, 0]
+        return  y_pred
 
     def compute_pred_batch_mat(self, y_data_mat):
         """ compute the y_pred for full batch.
@@ -148,13 +130,16 @@ class DMDMachine(keras.Model):
          Ex2: (256, 2, 51)
          batch size is a hyperparam.
          """
-        y_data_mat = y_data_mat.numpy()
-        y_data = self.windowing(y_data_mat)
-        Amat, y_predict = self.get_predicted_y(y_data=y_data)
-        return Amat, tf.convert_to_tensor(self.undo_windowing(y_predict))
+        y_data = y_data_mat.numpy()
+        # compute the predicted y given each initial condition. 
+        y_predict = np.zeros((y_data.shape[0], y_data.shape[1], y_data.shape[2]))
+        for ii in range(y_data.shape[0]):
+            y_predict[ii, :, :] = self.get_predicted_y(y_data[ii, :, :])
+        return tf.convert_to_tensor(y_predict)
+            
 
     @staticmethod
-    def windowing(x_mat):
+    def reshape(x_mat):
         """ convert (256, 2, 51) --> (512, 51)
         only works if 2 latent dim - good for ex1 and ex2 datasets. """
         new_mat = np.zeros((int(x_mat.shape[0]*x_mat.shape[1]), x_mat.shape[2]))
@@ -164,7 +149,7 @@ class DMDMachine(keras.Model):
         return new_mat
 
     @staticmethod
-    def undo_windowing(x_mat):
+    def undo_reshape(x_mat):
         """ convert (512, 51) --> (256, 2, 51) 
         only works if 2 latent dim - good for ex1 and ex2 datasets. """
         new_mat = np.zeros((int(x_mat.shape[0]/2), 2, x_mat.shape[1]))

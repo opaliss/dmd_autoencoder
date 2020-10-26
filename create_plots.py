@@ -51,7 +51,7 @@ def new_plot_model(test_run, random_batch):
     ax[1][1].grid()
     ax[1][1].set_xlabel("x1", fontsize=15)
     ax[1][1].set_ylabel("x2", fontsize=15)
-    ax[1][1].set_title("Latent space predicted, dmd reconstruction loss = " + str(np.log10(test_run[6].numpy())), \
+    ax[1][1].set_title("Latent space predicted, dmd reconstruction loss = " + str(np.log10(test_run[5].numpy())), \
                        fontsize=15)
 
     ax[0][0].axis("equal")
@@ -98,6 +98,7 @@ def plot_dmd_eigs(Amat, epoch, save_folder, data_type):
         test_title = "test_eig_" + str(epoch) + "epoch"
         directory = os.path.join("results", save_folder, "Test", test_title + '.png')
         plt.savefig(directory, facecolor=fig.get_facecolor())
+    plt.close()
 
 
 def create_plots(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,
@@ -151,7 +152,7 @@ def create_plots(batch_training_data, predictions_train, hyp_params, epoch, trai
     ax[1][1].set_xlabel("x1")
     ax[1][1].set_ylabel("x2")
     ax[1][1].set_title(
-        "Latent space predicted, dmd reconstruction loss = " + str(np.log10(predictions_train[6].numpy())))
+        "Latent space predicted, dmd reconstruction loss = " + str(np.log10(predictions_train[5].numpy())))
 
     fig.suptitle("Epoch: {}/{}, Learn Rate: {}, Loss: {:.3f}".format(epoch,
                                                                      hyp_params['num_epochs'],

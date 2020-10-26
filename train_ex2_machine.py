@@ -11,6 +11,7 @@ from tensorflow.keras.models import model_from_json
 from return_stats import *
 from create_plots import *
 import pickle
+import time
 
 new_data = False  # if False, it will read from pickle file instead of building the data.
 if new_data:
@@ -94,6 +95,8 @@ test_pred_loss = []
 epoch = 0
 
 while epoch < (hyp_params['num_epochs']):
+    # start timer.
+    start_time = time.process_time()
     # save the total loss of the training data and testing data.
     epoch_loss_avg_train = tf.keras.metrics.Mean()
     epoch_loss_avg_test = tf.keras.metrics.Mean()
@@ -132,7 +135,7 @@ while epoch < (hyp_params['num_epochs']):
             predictions_train = myMachine(batch_training_data)
             ae_loss = predictions_train[3]
             dmd_loss = predictions_train[2]
-            pred_loss = predictions_train[6]
+            pred_loss = predictions_train[5]
 
             loss_train = myLoss(batch_training_data, predictions_train)
 
@@ -169,7 +172,7 @@ while epoch < (hyp_params['num_epochs']):
         predictions_test = myMachine(batch_test_data)
         dmd_test = predictions_test[2]
         ae_test = predictions_test[3]
-        pred_test = predictions_test[6]
+        pred_test = predictions_test[5]
 
         loss_test = myLoss(batch_test_data, predictions_test)
 
@@ -191,21 +194,14 @@ while epoch < (hyp_params['num_epochs']):
 
     if epoch % 15 == 0:
         # save plots in results folder. Plot the latent space, ae_reconstruction, and input_batch.
-        create_plots(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder, \
-                     "train")
+        create_plots(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,"train")
         create_plots(batch_test_data, predictions_test, hyp_params, epoch, test_loss_results, save_folder, "test")
-
-        plot_dmd_eigs(predictions_train[5], epoch, save_folder, "train")
-        plot_dmd_eigs(predictions_test[5], epoch, save_folder, "test")
 
     if epoch % 10 == 0:
         # plot latent, input and reconstructed ae latest batch data.
-        try:
-            print_status_bar(epoch, hyp_params["num_epochs"], epoch_loss_avg_train.result(),
-                             epoch_loss_avg_test.result(),
-                             log_file_path=os.path.join("results", save_folder, "log.txt"))
-        except Exception:
-            print("print status failed.")
+        print_status_bar(epoch, hyp_params["num_epochs"], epoch_loss_avg_train.result(),
+                         epoch_loss_avg_test.result(), time.process_time() - start_time,
+                         log_file_path=os.path.join("results", save_folder, "log.txt"))
 
     if epoch % 50 == 0 and epoch != 0:
         # plot loss curves.
@@ -213,12 +209,9 @@ while epoch < (hyp_params['num_epochs']):
                              test_pred_loss, myLoss.c1, myLoss.c2, myLoss.c3, epoch, save_folder)
 
         # save loss curves in pickle files.
-        try:
-            save_loss_curves(train_loss_results, test_loss_results, train_dmd_loss, test_dmd_loss, train_ae_loss,
-                             test_ae_loss, train_pred_loss, test_pred_loss,
-                             file_path=os.path.join("results", "Loss", save_folder))
-        except Exception:
-            print("failed to save loss curves in pickle files. ")
+        save_loss_curves(train_loss_results, test_loss_results, train_dmd_loss, test_dmd_loss, train_ae_loss,
+                         test_ae_loss, train_pred_loss, test_pred_loss,
+                         file_path=os.path.join("results", save_folder, "Loss"))
 
         # save current machine.
         try:
