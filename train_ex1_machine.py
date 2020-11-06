@@ -29,6 +29,7 @@ hyp_params['num_phys_dims'] = training_data.params["num_physical_dim"]
 hyp_params['num_init_conds'] = training_data.params['num_initial_conditions']
 hyp_params['batch_size'] = 256
 hyp_params['num_epochs'] = 200
+hyp_params['window_size'] = None
 
 # Encoding/Decoding Layer Parameters.
 hyp_params['num_en_layers'] = 4
