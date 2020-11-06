@@ -17,8 +17,8 @@ def new_plot_model(test_run, random_batch):
         x2 = observed_data[ii, 1, :]
         ax[0][0].plot(x1, x2, '-')
     ax[0][0].grid()
-    ax[0][0].set_xlabel("x1", fontsize=15)
-    ax[0][0].set_ylabel("x2", fontsize=15)
+    ax[0][0].set_xlabel("$x_{1}$", fontsize=15)
+    ax[0][0].set_ylabel("$x_{2}$", fontsize=15)
     ax[0][0].set_title("Batch Data", fontsize=15)
 
     ae_data = test_run[0].numpy()
@@ -27,8 +27,8 @@ def new_plot_model(test_run, random_batch):
         x2 = ae_data[ii, 1, :]
         ax[0][1].plot(x1, x2, '-')
     ax[0][1].grid()
-    ax[0][1].set_xlabel("x1", fontsize=15)
-    ax[0][1].set_ylabel("x2", fontsize=15)
+    ax[0][1].set_xlabel("$x_{1}$", fontsize=15)
+    ax[0][1].set_ylabel("$x_{2}$", fontsize=15)
     ax[0][1].set_title("Autoencoder reconsturction= " + str(np.log10(test_run[3].numpy())), fontsize=15)
 
     modeled_data = test_run[1].numpy()
@@ -38,8 +38,8 @@ def new_plot_model(test_run, random_batch):
         x2 = modeled_rot[1]
         ax[1][0].plot(x1, x2, '-')
     ax[1][0].grid()
-    ax[1][0].set_xlabel("x1", fontsize=15)
-    ax[1][0].set_ylabel("x2", fontsize=15)
+    ax[1][0].set_xlabel("$y_{1}$", fontsize=15)
+    ax[1][0].set_ylabel("$y_{2}$", fontsize=15)
     ax[1][0].set_title("Latent space, DMD loss = " + str(np.log10(test_run[2].numpy())), fontsize=15)
 
     pred_data = test_run[4].numpy()
@@ -49,8 +49,8 @@ def new_plot_model(test_run, random_batch):
         x2 = modeled_rot[1]
         ax[1][1].plot(x1, x2, '-')
     ax[1][1].grid()
-    ax[1][1].set_xlabel("x1", fontsize=15)
-    ax[1][1].set_ylabel("x2", fontsize=15)
+    ax[1][1].set_xlabel("$y_{1}$", fontsize=15)
+    ax[1][1].set_ylabel("$y_{2}$", fontsize=15)
     ax[1][1].set_title("Latent space predicted, dmd reconstruction loss = " + str(np.log10(test_run[5].numpy())), \
                        fontsize=15)
 
@@ -58,6 +58,8 @@ def new_plot_model(test_run, random_batch):
     ax[0][1].axis("equal")
     ax[1][0].axis("equal")
     ax[1][1].axis("equal")
+    
+
 
 
 def plot_dmd_eigs(Amat, epoch, save_folder, data_type):
@@ -103,7 +105,7 @@ def plot_dmd_eigs(Amat, epoch, save_folder, data_type):
 
 def create_plots(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,
                  data_type="train"):
-    fig, ax = plt.subplots(nrows=2, ncols=2, sharex=True, sharey=True, figsize=(25, 18))
+    fig, ax = plt.subplots(nrows=3, ncols=2, figsize=(25, 18))
 
     rect = fig.patch
     rect.set_facecolor("white")
@@ -153,6 +155,18 @@ def create_plots(batch_training_data, predictions_train, hyp_params, epoch, trai
     ax[1][1].set_ylabel("x2")
     ax[1][1].set_title(
         "Latent space predicted, dmd reconstruction loss = " + str(np.log10(predictions_train[5].numpy())))
+
+    pred_data_dec = predictions_train[6].numpy()
+    for ii in range(0, pred_data_dec.shape[0]):
+        modeled_rot = pred_data_dec[ii, :, :]
+        x1 = modeled_rot[0]
+        x2 = modeled_rot[1]
+        ax[2][0].plot(x1, x2, '-')
+    ax[2][0].grid()
+    ax[2][0].set_xlabel("x1")
+    ax[2][0].set_ylabel("x2")
+    ax[2][0].set_title(
+        "Latent space predicted decoded, loss = " + str(np.log10(predictions_train[7].numpy())))
 
     fig.suptitle("Epoch: {}/{}, Learn Rate: {}, Loss: {:.3f}".format(epoch,
                                                                      hyp_params['num_epochs'],

@@ -7,6 +7,7 @@ import tensorflow as tf
 from dmd_machine.dmd_ae_machine import DMDMachine
 from dmd_machine.loss_function import LossFunction
 from data.data_class import Data
+from tensorflow import keras
 from tensorflow.keras.models import model_from_json
 from return_stats import *
 from create_plots import *
@@ -26,7 +27,7 @@ data = training_data.data_val
 # Network Hyper Parameters.
 hyp_params = dict()
 hyp_params['num_t_steps'] = training_data.params['num_time_steps']
-hyp_params['num_phys_dims'] = training_data.params["num_physical_dim"]
+hyp_params['phys_dim'] = training_data.params["num_physical_dim"]
 hyp_params['num_init_conds'] = training_data.params['num_initial_conditions']
 hyp_params['batch_size'] = 256
 hyp_params['num_epochs'] = 200
@@ -35,16 +36,19 @@ hyp_params['num_epochs'] = 200
 hyp_params['num_en_layers'] = 2
 hyp_params['num_en_neurons'] = 80
 hyp_params['latent_dim'] = 2
+hyp_params['window_size'] = 1
 
 hyp_params['activation'] = 'elu'
 hyp_params['weight_initializer'] = 'he_uniform'
 hyp_params['bias_initializer'] = 'he_uniform'
+hyp_params['ae_output_activation'] = "linear"
+hyp_params['hidden_activation'] = "elu"
 
 hyp_params['c1'] = 1  # coefficient auto-encoder loss.
 hyp_params['c2'] = 1  # coefficient of dmd loss.
 hyp_params['c3'] = 1  # coefficient of pred loss.
 
-save_folder = "AeEx2_oct25"  # save results in the folder " Results/save_folder"-
+save_folder = "AeEx2_oct30_model2"  # save results in the folder " Results/save_folder"-
 # including loss curves and plot latent data.
 
 
@@ -56,6 +60,8 @@ all_data = tf.data.Dataset.from_tensor_slices(input_data)
 all_data_shuffle = all_data.shuffle(hyp_params['num_init_conds'], seed=42)
 data_train = all_data_shuffle.take(int(0.8 * hyp_params['num_init_conds']))
 data_test = all_data_shuffle.skip(int(0.8 * hyp_params['num_init_conds']))
+# data_train = tf.data.Dataset.from_tensor_slices(all_data_shuffle[:0.8 * hyp_params['num_init_conds'], :, :])
+# data_test = tf.data.Dataset.from_tensor_slices(all_data_shuffle[0.8 * hyp_params['num_init_conds']:, :, :])
 
 # number of initial conditions in training and testing dataset.
 hyp_params['num_init_conds_training'] = int(0.8 * hyp_params['num_init_conds'])
@@ -63,6 +69,7 @@ hyp_params['num_init_conds_test'] = hyp_params['num_init_conds'] - hyp_params['n
 
 # initialize machine and loss objects.
 myMachine = DMDMachine(hyp_params)
+# myMachine.autoencoder = keras.models.load_model("./models/my_model_Ex2_oct21", compile=False)
 myLoss = LossFunction(hyp_params)
 
 # Learning rate initialization.
@@ -78,6 +85,10 @@ create_new_folders(save_folder)
 
 # save hyperparams in a json file.
 save_hyp_params_in_json(hyp_params=hyp_params, json_file_path=os.path.join("results", save_folder, "hyp_params.txt"))
+
+# ======================================================================================================================
+# Begin training model
+# ======================================================================================================================
 
 # initialize loss results (lists) as a function of epoch (iteration).
 train_loss_results = []
@@ -194,7 +205,8 @@ while epoch < (hyp_params['num_epochs']):
 
     if epoch % 15 == 0:
         # save plots in results folder. Plot the latent space, ae_reconstruction, and input_batch.
-        create_plots(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,"train")
+        create_plots(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,
+                     "train")
         create_plots(batch_test_data, predictions_test, hyp_params, epoch, test_loss_results, save_folder, "test")
 
     if epoch % 10 == 0:
@@ -203,7 +215,7 @@ while epoch < (hyp_params['num_epochs']):
                          epoch_loss_avg_test.result(), time.process_time() - start_time,
                          log_file_path=os.path.join("results", save_folder, "log.txt"))
 
-    if epoch % 50 == 0 and epoch != 0:
+    if epoch % 50 == 0:
         # plot loss curves.
         create_plots_of_loss(train_dmd_loss, train_ae_loss, test_dmd_loss, test_ae_loss, train_pred_loss,
                              test_pred_loss, myLoss.c1, myLoss.c2, myLoss.c3, epoch, save_folder)
@@ -214,10 +226,8 @@ while epoch < (hyp_params['num_epochs']):
                          file_path=os.path.join("results", save_folder, "Loss"))
 
         # save current machine.
-        try:
-            myMachine.autoencoder.save(os.path.join("models", save_folder), save_format='save_weights')
-        except Exception:
-            print("failed save machine. ")
+        myMachine.autoencoder.encoder.save(os.path.join("models", str("enc") + save_folder), save_format='save_weights')
+        myMachine.autoencoder.decoder.save(os.path.join("models", str("dec") + save_folder), save_format='save_weights')
 
     epoch += 1
 

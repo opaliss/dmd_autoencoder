@@ -17,7 +17,7 @@ def print_status_bar(iteration, total, loss_train, loss_test, run_time, log_file
     :return: print statement with current statistics.
     """
     string = str(iteration) + "/" + str(total) + " ,loss_train: " + str(loss_train.numpy()) + " , loss_test: " + \
-             str(loss_test.numpy()) + ", run time = " + str(run_time)
+             str(loss_test.numpy()) + ", run time = " + str(run_time) + " sec."
 
     if log_file_path is not None:
         with open(log_file_path, "a") as log:
