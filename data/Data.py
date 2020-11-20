@@ -240,7 +240,7 @@ if __name__ == "__main__":
         training_data = DataMaker(x_lower1=-0.5, x_upper1=0.5, x_lower2=-0.5, x_upper2=0.5,
                                   n_ic=10000, dt=0.02, tf=5, data_type="discrete")
         # save the dataset in a pickle file.
-        pickle.dump(training_data, open('../../dmd_autoencoder - Copy/dmd_autoencoder_2/data/dataset_discrete.pkl', 'wb'))
+        pickle.dump(training_data, open('dataset_discrete.pkl', 'wb'))
 
         # plot the dataset for visualization.
         data = training_data.data_val
@@ -260,7 +260,7 @@ if __name__ == "__main__":
         training_data = DataMaker(x_lower1=-3.1, x_upper1=3.1, x_lower2=-2, x_upper2=2,
                                   n_ic=10000, dt=0.3, tf=15, data_type="pendulum")
         # save the dataset in a pickle file.
-        pickle.dump(training_data, open('../../dmd_autoencoder - Copy/dmd_autoencoder_2/data/dataset_pendulum.pkl', 'wb'))
+        pickle.dump(training_data, open('dataset_pendulum.pkl', 'wb'))
 
         # plot the dataset for visualization.
         data = training_data.data_val
@@ -280,7 +280,7 @@ if __name__ == "__main__":
         training_data = DataMaker(x_lower1=0, x_upper1=1.1, x_lower2=0, x_upper2=2 * np.pi,
                                   n_ic=1e4, dt=0.2, tf=50, data_type="fluid_flow")
         # save the dataset in a pickle file.
-        pickle.dump(training_data, open('../../dmd_autoencoder - Copy/dmd_autoencoder_2/data/dataset_fluid.pkl', 'wb'))
+        pickle.dump(training_data, open('dataset_fluid.pkl', 'wb'))
 
         # plot the dataset for visualization.
         data = training_data.data_val
