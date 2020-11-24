@@ -35,7 +35,7 @@ hyp_params['num_epochs'] = 200
 hyp_params['num_en_layers'] = 2
 hyp_params['num_en_neurons'] = 80
 hyp_params['latent_dim'] = 2
-hyp_params['window_size'] = None
+hyp_params['window_size'] = 256
 
 hyp_params['activation'] = 'elu'
 hyp_params['weight_initializer'] = 'he_uniform'

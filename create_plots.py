@@ -58,8 +58,6 @@ def new_plot_model(test_run, random_batch):
     ax[0][1].axis("equal")
     ax[1][0].axis("equal")
     ax[1][1].axis("equal")
-    
-
 
 
 def plot_dmd_eigs(Amat, epoch, save_folder, data_type):
@@ -218,4 +216,59 @@ def create_plots_of_loss(dmd_loss_vec_train, ae_loss_vec_train, dmd_loss_vec_tes
     loss_title = "loss_curve_at_" + str(epoch) + "epoch"
     directory = os.path.join("results", save_folder, "Loss", loss_title + ".png")
     plt.savefig(directory, facecolor=fig.get_facecolor())
+    plt.close()
+
+
+def create_plots_fluid(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,
+                       data_type="train"):
+    # set up a figure twice as wide as it is tall
+    fig = plt.figure(figsize=plt.figaspect(0.5))
+
+    rect = fig.patch
+    rect.set_facecolor("white")
+    # set up the axes for the first plot
+    ax = fig.add_subplot(1, 2, 1, projection='3d')
+    observed_data = batch_training_data
+    for ii in range(0, observed_data.shape[0]):
+        x1 = observed_data[ii, 0, :]
+        x2 = observed_data[ii, 1, :]
+        x3 = observed_data[ii, 2, :]
+        ax.plot3D(x1, x2, x3)
+
+    ax.set_xlabel("$x_{1}$", fontsize=18)
+    ax.set_ylabel("$x_{2}$", fontsize=18)
+    ax.set_zlabel("$x_{3}$", fontsize=18)
+    if data_type == "train":
+        ax.text2D(0.05, 0.95, "Fluid Flow training dataset", transform=ax.transAxes, fontsize=20)
+    if data_type == "test":
+        ax.text2D(0.05, 0.95, "Fluid Flow testing dataset", transform=ax.transAxes, fontsize=20)
+
+    # set up the axes for the second plot
+    ax = fig.add_subplot(1, 2, 2, projection='3d')
+
+    pred_data_dec = predictions_train[6].numpy()
+    for ii in range(0, pred_data_dec.shape[0]):
+        x1 = pred_data_dec[ii, 0, :]
+        x2 = pred_data_dec[ii, 1, :]
+        x3 = pred_data_dec[ii, 2, :]
+        ax.plot3D(x1, x2, x3)
+
+    ax.set_xlabel("$x_{1}$", fontsize=18)
+    ax.set_ylabel("$x_{2}$", fontsize=18)
+    ax.set_zlabel("$x_{3}$", fontsize=18)
+    ax.text2D(0.05, 0.05, "Latent space predicted decoded, loss = " + str(np.log10(predictions_train[7].numpy())))
+
+    fig.suptitle("Epoch: {}/{}, Learn Rate: {}, Loss: {:.3f}".format(epoch,
+                                                                     hyp_params['num_epochs'],
+                                                                     hyp_params['lr'],
+                                                                     np.log10(train_loss_results[-1])))
+    if data_type == "train":
+        train_title = "training_data_" + str(epoch) + "epoch"
+        directory = os.path.join("results", save_folder, "Train", train_title + '.png')
+        plt.savefig(directory, facecolor=fig.get_facecolor())
+
+    if data_type == "test":
+        test_title = "test_data_" + str(epoch) + "epoch"
+        directory = os.path.join("results", save_folder, "Test", test_title + '.png')
+        plt.savefig(directory, facecolor=fig.get_facecolor())
     plt.close()
