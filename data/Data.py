@@ -184,7 +184,7 @@ def time_stepper_fluid_flow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * np.pi
     n_ic = np.int(n_ic)
 
     # number of initial conditions for slow manifold.
-    n_ic_slow = np.int(0.8*n_ic)
+    n_ic_slow = np.int(1.0*n_ic)
 
     # number of initial conditions for fast manifold.
     n_ic_fast = n_ic - n_ic_slow
@@ -205,9 +205,9 @@ def time_stepper_fluid_flow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * np.pi
     iconds[:n_ic_slow] = np.asarray([[x, y, z] for x, y, z in zip(x1, x2, x3)])
 
     # initial conditions for fast manifold.
-    iconds[n_ic_slow:] = np.asarray([[x, y, z] for x, y, z in zip(np.random.uniform(-1.1, 1.1, n_ic_fast),
-                                                                  np.random.uniform(-1.1, 1.1, n_ic_fast),
-                                                                  np.random.uniform(0, 2.42, n_ic_fast))])
+    #iconds[n_ic_slow:] = np.asarray([[x, y, z] for x, y, z in zip(np.random.uniform(-1.1, 1.1, n_ic_fast),
+    #                                                              np.random.uniform(-1.1, 1.1, n_ic_fast),
+    #                                                              np.random.uniform(0, 2.42, n_ic_fast))])
 
     # solve the system using Runge–Kutta 4th order method, see rk4 function above.
     data_mat = np.zeros((n_ic, 3, nsteps + 1), dtype=np.float32)
@@ -277,7 +277,7 @@ if __name__ == "__main__":
     if create_fluid_flow:
         # create the dataset
         training_data = DataMaker(x_lower1=0, x_upper1=1.1, x_lower2=0, x_upper2=2 * np.pi,
-                                  n_ic=1e4, dt=0.2, tf=50, data_type="fluid_flow")
+                                  n_ic=1e4, dt=0.05, tf=6, data_type="fluid_flow")
         # save the dataset in a pickle file.
         pickle.dump(training_data, open('dataset_fluid.pkl', 'wb'))
 
