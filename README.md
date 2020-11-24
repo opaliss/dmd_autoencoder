@@ -1,4 +1,4 @@
-# dmd_autoencoder
+# DMD (Dynamic Mode Decomposition) Autoencoder
 Leveraging deep learning to find an approximation of the Koopman operator. 
 
 # Dependencies
