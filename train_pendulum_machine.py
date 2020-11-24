@@ -6,7 +6,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import tensorflow as tf
 from dmd_machine.dmd_ae_machine import DMDMachine
 from dmd_machine.loss_function import LossFunction
-from data.data_class import Data
+from data.Data import DataMaker
 from tensorflow import keras
 from tensorflow.keras.models import model_from_json
 from return_stats import *
@@ -14,13 +14,11 @@ from create_plots import *
 import pickle
 import time
 
-new_data = False  # if False, it will read from pickle file instead of building the data.
-if new_data:
-    training_data = Data(x_lower1=-1.8, x_upper1=1.8, x_lower2=-1.2, x_upper2=1.2, n_side=100, dt=0.3, tf=15,
-                         data_type="ex2")
-    pickle.dump(training_data, open('./data/example_2_dataset_new.pkl', 'wb'))
-else:
-    training_data = pickle.load(open('./data/example_2_dataset.pkl', 'rb'))
+# ======================================================================================================================
+# Read in dataset.
+# ======================================================================================================================
+
+training_data = pickle.load(open('./data/dataset_pendulum.pkl', 'rb'))
 
 data = training_data.data_val
 
@@ -50,7 +48,6 @@ hyp_params['c3'] = 1  # coefficient of pred loss.
 
 save_folder = "AeEx2_oct30_model2"  # save results in the folder " Results/save_folder"-
 # including loss curves and plot latent data.
-
 
 # convert input data from numpy to tensorflow.
 input_data = training_data.data_val
@@ -84,8 +81,7 @@ tf.keras.backend.clear_session()
 create_new_folders(save_folder)
 
 # save hyperparams in a json file.
-save_hyp_params_in_json(hyp_params=hyp_params, json_file_path=os.path.join(
-    "../dmd_autoencoder - Copy/dmd_autoencoder_2/results", save_folder, "hyp_params.txt"))
+save_hyp_params_in_json(hyp_params=hyp_params, json_file_path=os.path.join("results", save_folder, "hyp_params.txt"))
 
 # ======================================================================================================================
 # Begin training model
@@ -214,7 +210,7 @@ while epoch < (hyp_params['num_epochs']):
         # plot latent, input and reconstructed ae latest batch data.
         print_status_bar(epoch, hyp_params["num_epochs"], epoch_loss_avg_train.result(),
                          epoch_loss_avg_test.result(), time.process_time() - start_time,
-                         log_file_path=os.path.join("../dmd_autoencoder - Copy/dmd_autoencoder_2/results", save_folder, "log.txt"))
+                         log_file_path=os.path.join("../results", save_folder, "log.txt"))
 
     if epoch % 50 == 0:
         # plot loss curves.
@@ -224,11 +220,11 @@ while epoch < (hyp_params['num_epochs']):
         # save loss curves in pickle files.
         save_loss_curves(train_loss_results, test_loss_results, train_dmd_loss, test_dmd_loss, train_ae_loss,
                          test_ae_loss, train_pred_loss, test_pred_loss,
-                         file_path=os.path.join("../dmd_autoencoder - Copy/dmd_autoencoder_2/results", save_folder, "Loss"))
+                         file_path=os.path.join("../results", save_folder, "Loss"))
 
         # save current machine.
-        myMachine.autoencoder.encoder.save(os.path.join("../dmd_autoencoder - Copy/dmd_autoencoder_2/models", str("enc") + save_folder), save_format='save_weights')
-        myMachine.autoencoder.decoder.save(os.path.join("../dmd_autoencoder - Copy/dmd_autoencoder_2/models", str("dec") + save_folder), save_format='save_weights')
+        myMachine.autoencoder.encoder.save(os.path.join("../models", str("enc") + save_folder), save_format='save_weights')
+        myMachine.autoencoder.decoder.save(os.path.join("../models", str("dec") + save_folder), save_format='save_weights')
 
     epoch += 1
 
