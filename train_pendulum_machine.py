@@ -11,6 +11,7 @@ from tensorflow import keras
 from tensorflow.keras.models import model_from_json
 from return_stats import *
 from create_plots import *
+from datetime import date
 import pickle
 import time
 
@@ -46,7 +47,7 @@ hyp_params['c1'] = 1  # coefficient auto-encoder loss.
 hyp_params['c2'] = 1  # coefficient of dmd loss.
 hyp_params['c3'] = 1  # coefficient of pred loss.
 
-save_folder = "AeEx2_oct30_model2"  # save results in the folder " Results/save_folder"-
+save_folder = "AeEx2_" + str(date.today().isoformat()) # save results in the folder " Results/save_folder"-
 # including loss curves and plot latent data.
 
 # convert input data from numpy to tensorflow.

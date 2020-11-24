@@ -7,6 +7,7 @@ from dmd_machine.dmd_ae_machine import DMDMachine
 from dmd_machine.loss_function import LossFunction
 from data.Data import DataMaker
 from tensorflow.keras.models import model_from_json
+from datetime import date
 from return_stats import *
 from create_plots import *
 import pickle
@@ -42,7 +43,7 @@ hyp_params['c1'] = 1  # coefficient auto-encoder loss.
 hyp_params['c2'] = 1  # coefficient of dmd loss.
 hyp_params['c3'] = 1  # coefficient of pred loss.
 
-save_folder = "AeEx1_oct25"  # save results in the folder " Results/save_folder"-
+save_folder = "AeEx1_" + str(date.today().isoformat())  # save results in the folder " Results/save_folder"-
 # including loss curves and plot latent data.
 
 # convert input data from numpy to tensorflow.
