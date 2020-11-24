@@ -12,9 +12,6 @@ Leveraging deep learning to find an approximation of the Koopman operator.
 [1] [Deep learning for universal linear embeddings
 of nonlinear dynamics](https://arxiv.org/pdf/1712.09707.pdf)
 
-# Authors
-San Diego State University, Department of Mathematics.
-
 
 # License
 [MIT]((https://choosealicense.com/licenses/mit/))
