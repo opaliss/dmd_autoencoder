@@ -211,7 +211,7 @@ while epoch < (hyp_params['num_epochs']):
         # plot latent, input and reconstructed ae latest batch data.
         print_status_bar(epoch, hyp_params["num_epochs"], epoch_loss_avg_train.result(),
                          epoch_loss_avg_test.result(), time.process_time() - start_time,
-                         log_file_path=os.path.join("../results", save_folder, "log.txt"))
+                         log_file_path=os.path.join("results", save_folder, "log.txt"))
 
     if epoch % 50 == 0:
         # plot loss curves.
@@ -221,11 +221,11 @@ while epoch < (hyp_params['num_epochs']):
         # save loss curves in pickle files.
         save_loss_curves(train_loss_results, test_loss_results, train_dmd_loss, test_dmd_loss, train_ae_loss,
                          test_ae_loss, train_pred_loss, test_pred_loss,
-                         file_path=os.path.join("../results", save_folder, "Loss"))
+                         file_path=os.path.join("results", save_folder, "Loss"))
 
         # save current machine.
-        myMachine.autoencoder.encoder.save(os.path.join("../models", str("enc") + save_folder), save_format='save_weights')
-        myMachine.autoencoder.decoder.save(os.path.join("../models", str("dec") + save_folder), save_format='save_weights')
+        myMachine.autoencoder.encoder.save(os.path.join("models", str("enc") + save_folder), save_format='save_weights')
+        myMachine.autoencoder.decoder.save(os.path.join("models", str("dec") + save_folder), save_format='save_weights')
 
     epoch += 1
 

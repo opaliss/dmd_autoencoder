@@ -199,7 +199,7 @@ while epoch < (hyp_params['num_epochs']):
         try:
             print_status_bar(epoch, hyp_params["num_epochs"], epoch_loss_avg_train.result(),
                              epoch_loss_avg_test.result(), time.process_time() - start_time,
-                             log_file_path=os.path.join("../results", save_folder, "log.txt"))
+                             log_file_path=os.path.join("results", save_folder, "log.txt"))
         except Exception:
             print("print status failed.")
 
@@ -211,11 +211,11 @@ while epoch < (hyp_params['num_epochs']):
         # save loss curves in pickle files.
         save_loss_curves(train_loss_results, test_loss_results, train_dmd_loss, test_dmd_loss, train_ae_loss,
                          test_ae_loss, train_pred_loss, test_pred_loss,
-                         file_path=os.path.join("../results", "Loss", save_folder))
+                         file_path=os.path.join("results", "Loss", save_folder))
 
         # save current machine.
         try:
-            myMachine.autoencoder.save(os.path.join("../models", save_folder), save_format='save_weights')
+            myMachine.autoencoder.save(os.path.join("models", save_folder), save_format='save_weights')
         except Exception:
             print("failed save machine. ")
 
