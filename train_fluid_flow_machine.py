@@ -124,8 +124,8 @@ while epoch < (hyp_params['num_epochs']):
     train_batch = data_train.shuffle(hyp_params['num_init_conds_training'], seed=42).batch(hyp_params["batch_size"],
                                                                                            drop_remainder=True)
 
-    test_batch = data_test.shuffle(hyp_params['num_init_conds_test'], seed=42).batch(hyp_params["batch_size"],
-                                                                                     drop_remainder=True)
+    # no need to shuffle test dataset.
+    test_batch = data_test.batch(hyp_params["batch_size"], drop_remainder=True)
 
     # Learning rate scheduling plan.  See Ch. 11 of O'Reilly.
     if epoch % hyp_params["esteps"] == 0:
@@ -188,15 +188,21 @@ while epoch < (hyp_params['num_epochs']):
 
     if epoch % 15 == 0:
         # save plots in results folder. Plot the latent space, ae_reconstruction, and input_batch.
-        create_plots_fluid(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,
-                     "train")
-        create_plots_fluid(batch_test_data, predictions_test, hyp_params, epoch, test_loss_results, save_folder, "test")
+        create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results,
+                                save_folder, "train")
+        create_plots_fluid_pred(batch_test_data, predictions_test, hyp_params, epoch, test_loss_results, save_folder,
+                                "test")
 
+        # fluid latent space plots.
+        create_plots_fluid_latent(predictions_train, hyp_params, epoch, train_loss_results, save_folder,
+                                  data_type="train")
+        create_plots_fluid_latent(predictions_test, hyp_params, epoch, train_loss_results, save_folder,
+                                  data_type="test")
     if epoch % 10 == 0:
         # plot latent, input and reconstructed ae latest batch data.
         print_status_bar(epoch, hyp_params["num_epochs"], epoch_loss_avg_train.result(),
                          epoch_loss_avg_test.result(), time.process_time() - start_time,
-                         log_file_path=os.path.join("../results", save_folder, "log.txt"))
+                         log_file_path=os.path.join("results", save_folder, "log.txt"))
 
     if epoch % 50 == 0:
         # plot loss curves.
@@ -206,11 +212,11 @@ while epoch < (hyp_params['num_epochs']):
         # save loss curves in pickle files.
         save_loss_curves(train_loss_results, test_loss_results, train_dmd_loss, test_dmd_loss, train_ae_loss,
                          test_ae_loss, train_pred_loss, test_pred_loss,
-                         file_path=os.path.join("../results", save_folder, "Loss"))
+                         file_path=os.path.join("results", save_folder, "Loss"))
 
         # save current machine.
-        myMachine.autoencoder.encoder.save(os.path.join("../models", str("enc") + save_folder), save_format='save_weights')
-        myMachine.autoencoder.decoder.save(os.path.join("../models", str("dec") + save_folder), save_format='save_weights')
+        myMachine.autoencoder.encoder.save(os.path.join("models", str("enc") + save_folder), save_format='save_weights')
+        myMachine.autoencoder.decoder.save(os.path.join("models", str("dec") + save_folder), save_format='save_weights')
 
     epoch += 1
 

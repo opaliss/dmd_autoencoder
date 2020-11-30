@@ -219,8 +219,8 @@ def create_plots_of_loss(dmd_loss_vec_train, ae_loss_vec_train, dmd_loss_vec_tes
     plt.close()
 
 
-def create_plots_fluid(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,
-                       data_type="train"):
+def create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,
+                            data_type="train"):
     # set up a figure twice as wide as it is tall
     fig = plt.figure(figsize=plt.figaspect(0.5))
 
@@ -235,13 +235,13 @@ def create_plots_fluid(batch_training_data, predictions_train, hyp_params, epoch
         x3 = observed_data[ii, 2, :]
         ax.plot3D(x1, x2, x3)
 
-    ax.set_xlabel("$x_{1}$", fontsize=18)
-    ax.set_ylabel("$x_{2}$", fontsize=18)
-    ax.set_zlabel("$x_{3}$", fontsize=18)
+    ax.set_xlabel("$x_{1}$")
+    ax.set_ylabel("$x_{2}$")
+    ax.set_zlabel("$x_{3}$")
     if data_type == "train":
-        ax.text2D(0.05, 0.95, "Fluid Flow training dataset", transform=ax.transAxes, fontsize=20)
+        ax.text2D(0.05, 0.95, "Fluid Flow training dataset", transform=ax.transAxes)
     if data_type == "test":
-        ax.text2D(0.05, 0.95, "Fluid Flow testing dataset", transform=ax.transAxes, fontsize=20)
+        ax.text2D(0.05, 0.95, "Fluid Flow testing dataset", transform=ax.transAxes)
 
     # set up the axes for the second plot
     ax = fig.add_subplot(1, 2, 2, projection='3d')
@@ -253,10 +253,10 @@ def create_plots_fluid(batch_training_data, predictions_train, hyp_params, epoch
         x3 = pred_data_dec[ii, 2, :]
         ax.plot3D(x1, x2, x3)
 
-    ax.set_xlabel("$x_{1}$", fontsize=18)
-    ax.set_ylabel("$x_{2}$", fontsize=18)
-    ax.set_zlabel("$x_{3}$", fontsize=18)
-    ax.text2D(0.05, 0.05, "Latent space predicted decoded, loss = " + str(np.log10(predictions_train[7].numpy())))
+    ax.set_xlabel("$x_{1}$")
+    ax.set_ylabel("$x_{2}$")
+    ax.set_zlabel("$x_{3}$")
+    ax.text2D(0.05, 0.15, "Latent space predicted decoded, loss = " + str(np.log10(predictions_train[7].numpy())))
 
     fig.suptitle("Epoch: {}/{}, Learn Rate: {}, Loss: {:.3f}".format(epoch,
                                                                      hyp_params['num_epochs'],
@@ -269,6 +269,60 @@ def create_plots_fluid(batch_training_data, predictions_train, hyp_params, epoch
 
     if data_type == "test":
         test_title = "test_data_" + str(epoch) + "epoch"
+        directory = os.path.join("results", save_folder, "Test", test_title + '.png')
+        plt.savefig(directory, facecolor=fig.get_facecolor())
+    plt.close()
+
+
+def create_plots_fluid_latent(predictions_train, hyp_params, epoch, train_loss_results, save_folder, data_type="train"):
+    # set up a figure twice as wide as it is tall
+    fig = plt.figure(figsize=plt.figaspect(0.5))
+
+    rect = fig.patch
+    rect.set_facecolor("white")
+    # set up the axes for the first plot
+    ax = fig.add_subplot(1, 2, 1, projection='3d')
+    y = predictions_train[1]
+    for ii in range(0, y.shape[0]):
+        x1 = y[ii, 0, :]
+        x2 = y[ii, 1, :]
+        x3 = y[ii, 2, :]
+        ax.plot3D(x1, x2, x3)
+
+    ax.set_xlabel("$x_{1}$")
+    ax.set_ylabel("$x_{2}$")
+    ax.set_zlabel("$x_{3}$")
+    if data_type == "train":
+        ax.text2D(0.05, 0.95, "Latent training dataset", transform=ax.transAxes)
+    if data_type == "test":
+        ax.text2D(0.05, 0.95, "Latent testing dataset", transform=ax.transAxes)
+
+    # set up the axes for the second plot
+    ax = fig.add_subplot(1, 2, 2, projection='3d')
+
+    y_predict = predictions_train[4].numpy()
+    for ii in range(0, y_predict.shape[0]):
+        x1 = y_predict[ii, 0, :]
+        x2 = y_predict[ii, 1, :]
+        x3 = y_predict[ii, 2, :]
+        ax.plot3D(x1, x2, x3)
+
+    ax.set_xlabel("$x_{1}$")
+    ax.set_ylabel("$x_{2}$")
+    ax.set_zlabel("$x_{3}$")
+    ax.text2D(0.05, 0.15, "Latent space predicted, loss = " + str(np.log10(predictions_train[5].numpy())))
+
+    fig.suptitle("Epoch: {}/{}, Learn Rate: {}, Loss: {:.3f}".format(epoch,
+                                                                     hyp_params['num_epochs'],
+                                                                     hyp_params['lr'],
+                                                                     np.log10(train_loss_results[-1])))
+    if data_type == "train":
+        train_title = "training_latent_" + str(epoch) + "epoch"
+        directory = os.path.join("results", save_folder, "Train", train_title + '.png')
+        plt.savefig(directory, facecolor=fig.get_facecolor())
+
+    if data_type == "test":
+        test_title = "test_latent_" + str(epoch) + "epoch"
         directory = os.path.join("results", save_folder, "Test", test_title + '.png')
         plt.savefig(directory, facecolor=fig.get_facecolor())
     plt.close()

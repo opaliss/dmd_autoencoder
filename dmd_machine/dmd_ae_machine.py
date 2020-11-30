@@ -185,8 +185,8 @@ class DMDMachine(keras.Model):
         new_mat = tf.Variable(tf.zeros(
             shape=(int(self.batch_size * self.latent_dim), self.num_t_steps), dtype=tf.float32))
         for ii in range(int(self.batch_size)):
-            new_mat[2 * ii, :].assign(x_mat[ii, 0, :])
-            new_mat[2 * ii + 1, :].assign(x_mat[ii, 1, :])
+            for jj in range(int(self.latent_dim)):
+                new_mat[int(self.latent_dim * ii + jj), :].assign(x_mat[ii, jj, :])
         return new_mat
 
     def undo_reshape(self, x_mat):
@@ -195,8 +195,8 @@ class DMDMachine(keras.Model):
         new_mat = tf.Variable(tf.zeros(
             shape=(self.batch_size, self.latent_dim, self.num_t_steps), dtype=tf.float32))
         for ii in range(int(self.batch_size)):
-            new_mat[ii, 0, :].assign(x_mat[2 * ii, :])
-            new_mat[ii, 1, :].assign(x_mat[2 * ii + 1, :])
+            for jj in range(int(self.latent_dim)):
+                new_mat[ii, jj, :].assign(x_mat[int(self.latent_dim * ii + jj), :])
         return new_mat
 
     @staticmethod

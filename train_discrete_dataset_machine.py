@@ -112,8 +112,8 @@ while epoch < (hyp_params['num_epochs']):
     train_batch = data_train.shuffle(hyp_params['num_init_conds_training'], seed=42).batch(hyp_params["batch_size"],
                                                                                            drop_remainder=True)
 
-    test_batch = data_test.shuffle(hyp_params['num_init_conds_test'], seed=42).batch(hyp_params["batch_size"],
-                                                                                     drop_remainder=True)
+    # no need to shuffle testing dataset for plotting purposes.
+    test_batch = data_test.batch(hyp_params["batch_size"], drop_remainder=True)
 
     # Learning rate scheduling plan.  See Ch. 11 of O'Reilly.
     if epoch % hyp_params["esteps"] == 0:
