@@ -1,2 +1,1 @@
-0/200 ,loss_train: 0.5034079 , loss_test: 0.062467128, run time = 342.1875 sec.
 0/200 ,loss_train: 1.4667728 , loss_test: 0.12635787, run time = 650.625 sec.
