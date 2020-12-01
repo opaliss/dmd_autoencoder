@@ -7,10 +7,10 @@ Let $x_{t}$ be the state vector of a nonlinear dynamic system. In order to creat
 
 (2) $$x_{t+1} = Ax_{t} $$
     
-A nonlinear system can be represented in term of an infinite dimensional operator acting on a Hilbert space of measurement function of the state of the system. The Koopman operator is linear, yet infinite-dimensional. An approximation of the Koopman Operator can be obtained by variants of the Dynamic Mode Decomposition. 
+A nonlinear system can be represented in term of an infinite dimensional operator acting on a Hilbert space of measurement function of the state of the system. The Koopman operator is linear, yet infinite-dimensional. An approximation of the Koopman Operator can be obtained by variants of the Dynamic Mode Decomposition algorithm. 
 
-The Dynamic Mode Decomposition developed by Schmid is a dimensionality reduction algorithm. Given time series data-set, the exact Dynamic Mode Decomposition computes the best fit operator A that advances the system measurements in time [[2]](https://arxiv.org/abs/1312.0041).
-The data-set can be arranged into two matrices, $X$ and $X'$:
+The Dynamic Mode Decomposition developed by Schmid is a dimensionality reduction algorithm. Given time series dataset, the exact Dynamic Mode Decomposition computes the best fit operator A that advances the system measurements in time [[2]](https://arxiv.org/abs/1312.0041).
+The time series dataset can be arranged into two matrices, $X$ and $X'$:
     
 (3)
 

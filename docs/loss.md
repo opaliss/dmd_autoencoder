@@ -2,7 +2,7 @@ The simple DMD autoencoder loss function is a combination of three evaluations:
 
 **Autoencoder reconstruction loss** -  This ensures that the original trajectories can be recovered.
 \begin{equation} \label{eq:8}
-L_{1} = MSE \left\| X - \tilde{X} \right\|
+L_{1} = MSE \left\| X - g^{-1}(\tilde{Y}) \right\|
 \end{equation}
 
 **DMD loss** - evaluate the linearity of the latent space dynamics. The following is derived in equation (6).
