@@ -20,10 +20,10 @@ class DataMaker(object):
                                                   x_lower2=x_lower2, x_upper2=x_upper2,
                                                   n_ic=n_ic, dt=dt, tf=tf)
 
-        elif data_type == 'fluid_flow':
-            self.data_val = time_stepper_fluid_flow(r_lower=x_lower1, r_upper=x_upper1,
-                                                    t_lower=x_lower2, t_upper=x_upper2,
-                                                    n_ic=n_ic, dt=dt, tf=tf)
+        elif data_type == 'fluid_flow_slow':
+            self.data_val = time_stepper_fluid_flow_slow(r_lower=x_lower1, r_upper=x_upper1,
+                                                         t_lower=x_lower2, t_upper=x_upper2,
+                                                         n_ic=n_ic, dt=dt, tf=tf)
         n_i, n_r, n_t = self.data_val.shape
         self.params['data_type'] = data_type
         self.params['num_time_steps'] = n_t
@@ -166,7 +166,7 @@ def time_stepper_pendulum(x_lower1, x_upper1, x_lower2, x_upper2, n_ic=1e4, dt=0
     return data_mat
 
 
-def time_stepper_fluid_flow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * np.pi, n_ic=1e4, dt=0.05, tf=6):
+def time_stepper_fluid_flow_slow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * np.pi, n_ic=1e4, dt=0.05, tf=6):
     """
     :param r_lower: lower bound for r. Default is 0.
     :param r_upper: Upper bound for r. Default is 1.
@@ -180,14 +180,8 @@ def time_stepper_fluid_flow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * np.pi
     # dim - time steps, default is 51.
     nsteps = np.int(tf / dt)
 
-    # number of initial conditions.
-    n_ic = np.int(n_ic)
-
     # number of initial conditions for slow manifold.
-    n_ic_slow = np.int(1.0*n_ic)
-
-    # number of initial conditions for fast manifold.
-    n_ic_fast = n_ic - n_ic_slow
+    n_ic_slow = np.int(n_ic)
 
     # create initial condition grid.
     r = np.random.uniform(r_lower, r_upper, n_ic_slow)
@@ -203,11 +197,6 @@ def time_stepper_fluid_flow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * np.pi
 
     # initial conditions for slow manifold.
     iconds[:n_ic_slow] = np.asarray([[x, y, z] for x, y, z in zip(x1, x2, x3)])
-
-    # initial conditions for fast manifold.
-    #iconds[n_ic_slow:] = np.asarray([[x, y, z] for x, y, z in zip(np.random.uniform(-1.1, 1.1, n_ic_fast),
-    #                                                              np.random.uniform(-1.1, 1.1, n_ic_fast),
-    #                                                              np.random.uniform(0, 2.42, n_ic_fast))])
 
     # solve the system using Runge–Kutta 4th order method, see rk4 function above.
     data_mat = np.zeros((n_ic, 3, nsteps + 1), dtype=np.float32)
@@ -232,7 +221,7 @@ if __name__ == "__main__":
 
     create_discrete = False
     create_pendulum = False
-    create_fluid_flow = True
+    create_fluid_flow_slow = True
 
     if create_discrete:
         # create the dataset
@@ -274,10 +263,10 @@ if __name__ == "__main__":
         plt.savefig('pendulum.png')
         plt.show()
 
-    if create_fluid_flow:
+    if create_fluid_flow_slow:
         # create the dataset
         training_data = DataMaker(x_lower1=0, x_upper1=1.1, x_lower2=0, x_upper2=2 * np.pi,
-                                  n_ic=1e4, dt=0.05, tf=6, data_type="fluid_flow")
+                                  n_ic=1e4, dt=0.05, tf=6, data_type="fluid_flow_slow")
         # save the dataset in a pickle file.
         pickle.dump(training_data, open('dataset_fluid.pkl', 'wb'))
 
