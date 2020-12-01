@@ -4,7 +4,9 @@ Prediction, estimation, and control of dynamical systems remain challenging due 
 # Introduction
 Predictions of nonlinear dynamical systems is a fundamental problem in engineering. Whenever possible, it is desirable to work in a linear framework. Linear dynamical systems have closed-form solutions. Moreover, there are many techniques for analysis, prediction, and control of linear dynamical systems. In order to transition from a nonlinear framework to a linear framework, I leverage deep learning to learn a nonlinear mapping to a space where the trajectories exhibit approximately linear dynamics. The initial research steps were to reproduce the results in "Deep learning for universal linear embeddings of nonlinear dynamics" by Lusch et al [1]. In this process, I rebuilt their code in an upgraded library Tensorflow 2.0. Since the performance of the Koopman autoencoder highly depended on the weight initialization, I developed a simple Dynamic Mode Decomposition (DMD) autoencoder as a pretrain to Koopman autoencoder model.
 
+# Network architecture 
 ![](figures/model_arc.PNG)
+
 # Documentation site 
 https://opaliss.github.io/dmd_autoencoder/
 
