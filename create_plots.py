@@ -192,23 +192,23 @@ def create_plots_of_loss(dmd_loss_vec_train, ae_loss_vec_train, dmd_loss_vec_tes
     rect = fig.patch
     rect.set_facecolor("white")
 
-    ax[0].plot(np.arange(len(dmd_loss_vec_train)), np.log10(dmd_loss_vec_train), label="training batch")
-    ax[0].plot(np.arange(len(dmd_loss_vec_test)), np.log10(dmd_loss_vec_test), label="testing batch")
+    ax[0].plot(np.arange(len(dmd_loss_vec_train)), np.log10(dmd_loss_vec_train), label="train data")
+    ax[0].plot(np.arange(len(dmd_loss_vec_test)), np.log10(dmd_loss_vec_test), label="test data")
     ax[0].set_xlabel("# epoch")
     ax[0].set_ylabel("log10(loss)")
-    ax[0].set_title("DMD loss training data, weight = " + str(c2.numpy()))
+    ax[0].set_title("DMD loss, weight = " + str(c2.numpy()))
 
-    ax[1].plot(np.arange(len(ae_loss_vec_train)), np.log10(ae_loss_vec_train), label="AE loss")
-    ax[1].plot(np.arange(len(ae_loss_vec_test)), np.log10(ae_loss_vec_test), label="AE loss")
+    ax[1].plot(np.arange(len(ae_loss_vec_train)), np.log10(ae_loss_vec_train), label="train data")
+    ax[1].plot(np.arange(len(ae_loss_vec_test)), np.log10(ae_loss_vec_test), label="test data")
     ax[1].set_xlabel("# epoch")
     ax[1].set_ylabel("log10(loss)")
-    ax[1].set_title("AE loss training data, weight = " + str(c1.numpy()))
+    ax[1].set_title("AE loss, weight = " + str(c1.numpy()))
 
-    ax[2].plot(np.arange(len(pred_loss_vec_train)), np.log10(pred_loss_vec_train), label="Pred loss")
-    ax[2].plot(np.arange(len(pred_loss_vec_test)), np.log10(pred_loss_vec_test), label="Pred loss")
+    ax[2].plot(np.arange(len(pred_loss_vec_train)), np.log10(pred_loss_vec_train), label="train data")
+    ax[2].plot(np.arange(len(pred_loss_vec_test)), np.log10(pred_loss_vec_test), label="test data")
     ax[2].set_xlabel("# epoch")
     ax[2].set_ylabel("log10(loss)")
-    ax[2].set_title("Pred loss training data, weight = " + str(c3.numpy()))
+    ax[2].set_title("Pred loss, weight = " + str(c3.numpy()))
 
     ax[0].legend()
     ax[1].legend()
