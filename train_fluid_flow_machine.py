@@ -32,8 +32,8 @@ hyp_params['batch_size'] = 256
 hyp_params['num_epochs'] = 200
 
 # Encoding/Decoding Layer Parameters.
-hyp_params['num_en_layers'] = 1
-hyp_params['num_en_neurons'] = 105
+hyp_params['num_en_layers'] = 3
+hyp_params['num_en_neurons'] = 80
 hyp_params['latent_dim'] = 3
 hyp_params['window_size'] = 256
 
@@ -72,7 +72,7 @@ myLoss = LossFunction(hyp_params)
 
 # Learning rate initialization.
 hyp_params["initial_learning_rate"] = 3e-3  # MAJOR PARAMETER CHOICE
-hyp_params["esteps"] = 80  # MAJOR PARAMETER CHOICE
+hyp_params["esteps"] = 30  # MAJOR PARAMETER CHOICE
 count = 0
 
 # clear previous run session.

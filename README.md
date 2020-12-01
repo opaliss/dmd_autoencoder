@@ -13,6 +13,24 @@ Let <img src="https://render.githubusercontent.com/render/math?math=x_{t}"> be t
 A nonlinear system can be represented in term of an infinite-dimensional operator acting on a Hilbert space of measurement function of the state of the system. The Koopman operator is linear, yet infinite-dimensional. An approximation of the Koopman Operator can be obtained by variants of the Dynamic Mode Decomposition. 
 The Dynamic Mode Decomposition developed by Schmid is a dimensionality reduction algorithm. Given time series data-set, the exact Dynamic Mode Decomposition computes the best fit operator A that advances the system measurements in time [2]. The data-set can be arranged into two matrices, X and X′:
 
+In order to find the matrix A in equation [1] and [2], we solve the linear system with the DMD algorithm. By the singular value decomposition, 
+<img src="https://render.githubusercontent.com/render/math?math=X \approx U \Sigma V^{*}">
+where 
+
+<img src="https://render.githubusercontent.com/render/math?math=\tilde{U} \in \mathbb{C}^{n \times r}">
+
+, 
+
+<img src="https://render.githubusercontent.com/render/math?math=\tilde{\Sigma} \in \mathbb{C}^{r \times r}">
+
+, 
+and 
+
+<img src="https://render.githubusercontent.com/render/math?math=\tilde{\Sigma} \in \mathbb{C}^{r \times r}">
+
+
+. Therefore, the matrix A is obtained by $ A = X'\tilde{V}\tilde{\Sigma}^{-1}\tilde{U}^{*}$. 
+
 ![](figures/EQ3.PNG)
 # Dependencies
 1. [Python >= 3.7](https://www.python.org/downloads/)

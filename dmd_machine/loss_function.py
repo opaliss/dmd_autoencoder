@@ -29,9 +29,10 @@ class LossFunction(keras.losses.Loss):
         y_data = my_machine_output[1]
         dmd_loss = my_machine_output[2]
         y_pred = my_machine_output[4]
+        y_pred_dec = my_machine_output[6]
 
         # MSE keras function for the initial condition.
-        self.ae_loss = tf.reduce_mean(keras.losses.MSE(x_data[:, :, 0], x_ae[:, :, 0]))
+        self.ae_loss = tf.reduce_mean(keras.losses.MSE(x_data, y_pred_dec))
 
         # linearity loss, already computed in dmd_ae_machine.
         self.linearity_loss = tf.constant(dmd_loss, dtype=tf.float32)
