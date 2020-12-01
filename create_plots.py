@@ -258,8 +258,8 @@ def create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, 
     ax.set_xlabel("$x_{1}$")
     ax.set_ylabel("$x_{2}$")
     ax.set_zlabel("$x_{3}$")
-    ax.text2D(0.05, 0.95, "Latent space predicted decoded, loss = " + str(np.log10(predictions_train[7].numpy())),
-              transform=ax.transAxes)
+    loss = format(predictions_train[7].numpy(), ".3E")
+    ax.text2D(0.05, 0.95, "Latent space predicted decoded, loss = " + str(loss), transform=ax.transAxes)
 
     fig.suptitle("Epoch: {}/{}, Learn Rate: {}, Loss: {:.3f}".format(epoch,
                                                                      hyp_params['num_epochs'],
@@ -313,8 +313,8 @@ def create_plots_fluid_latent(predictions_train, hyp_params, epoch, train_loss_r
     ax.set_xlabel("$x_{1}$")
     ax.set_ylabel("$x_{2}$")
     ax.set_zlabel("$x_{3}$")
-    ax.text2D(0.05, 0.95, "Latent space predicted, loss = " + str(np.log10(predictions_train[5].numpy())),
-              transform=ax.transAxes)
+    latent_loss = format(predictions_train[5].numpy(), ".3E")
+    ax.text2D(0.05, 0.95, "Latent space predicted, loss = " + str(latent_loss), transform=ax.transAxes)
 
     fig.suptitle("Epoch: {}/{}, Learn Rate: {}, Loss: {:.3f}".format(epoch,
                                                                      hyp_params['num_epochs'],
