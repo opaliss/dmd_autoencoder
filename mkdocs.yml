@@ -1,0 +1,42 @@
+site_name: DMD Autoencoder #name of your site.
+site_description: This is a collection of Python subroutines and examples that illustrate how to train a Dynamic Mode Decomposition autoencoder.
+
+# site_url:
+repo_url: https://github.com/opaliss/dmd_autoencoder
+
+theme:
+  name: material
+  language: en
+  palette:
+    primary: black
+    accent: indigo
+
+nav:
+  - Home: index.md
+  - DMD and Koopman: dmd.md
+  - Model: model.md
+  - Loss: loss.md
+  - Discrete Dataset: example1.md
+  - Pendulum Dataset: example2.md
+  - Fluid Flow Dataset: example3.md
+  - Hyper-parameters: hyperparams.md
+  - Setup: setup.md
+
+
+markdown_extensions:
+  - codehilite:
+      linenums: true
+  - admonition
+  - attr_list
+  - pymdownx.critic
+  - pymdownx.mark
+  - pymdownx.tabbed
+  - pymdownx.arithmatex
+
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML
+
+plugins:
+  - search:
+      lang: en
