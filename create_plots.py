@@ -131,7 +131,8 @@ def create_plots(batch_training_data, predictions_train, hyp_params, epoch, trai
     ax[0][1].grid()
     ax[0][1].set_xlabel("x1")
     ax[0][1].set_ylabel("x2")
-    ax[0][1].set_title("Autoencoder reconsturction= " + str(np.log10(predictions_train[3].numpy())))
+    ae_loss = format(predictions_train[3].numpy(), ".3E")
+    ax[0][1].set_title("Autoencoder reconsturction, AE loss = " + str(ae_loss))
 
     modeled_data = predictions_train[1].numpy()
     for ii in range(0, modeled_data.shape[0]):
@@ -142,7 +143,8 @@ def create_plots(batch_training_data, predictions_train, hyp_params, epoch, trai
     ax[1][0].grid()
     ax[1][0].set_xlabel("x1")
     ax[1][0].set_ylabel("x2")
-    ax[1][0].set_title("Latent space, DMD loss = " + str(np.log10(predictions_train[2].numpy())))
+    dmd_loss = format(predictions_train[2].numpy(), ".3E")
+    ax[1][0].set_title("Latent space, DMD loss = " + str(dmd_loss))
 
     pred_data = predictions_train[4].numpy()
     for ii in range(0, pred_data.shape[0]):
@@ -153,8 +155,8 @@ def create_plots(batch_training_data, predictions_train, hyp_params, epoch, trai
     ax[1][1].grid()
     ax[1][1].set_xlabel("x1")
     ax[1][1].set_ylabel("x2")
-    ax[1][1].set_title(
-        "Latent space predicted, dmd reconstruction loss = " + str(np.log10(predictions_train[5].numpy())))
+    pred_loss = format(predictions_train[5].numpy(), ".3E")
+    ax[1][1].set_title("Latent space predicted, dmd reconstruction loss = " + str(pred_loss))
 
     pred_data_dec = predictions_train[6].numpy()
     for ii in range(0, pred_data_dec.shape[0]):
@@ -165,13 +167,10 @@ def create_plots(batch_training_data, predictions_train, hyp_params, epoch, trai
     ax[2][0].grid()
     ax[2][0].set_xlabel("x1")
     ax[2][0].set_ylabel("x2")
-    ax[2][0].set_title(
-        "Latent space predicted decoded, loss = " + str(np.log10(predictions_train[7].numpy())))
+    loss = format(predictions_train[7].numpy(), ".3E")
+    ax[2][0].set_title("Latent space predicted decoded, loss = " + str(loss))
 
-    fig.suptitle("Epoch: {}/{}, Learn Rate: {}, Loss: {:.3f}".format(epoch,
-                                                                     hyp_params['num_epochs'],
-                                                                     hyp_params['lr'],
-                                                                     np.log10(train_loss_results[-1])))
+    fig.suptitle("Epoch: {}/{}, Learn Rate: {}".format(epoch, hyp_params['num_epochs'], format(hyp_params['lr'], ".3E")))
     if data_type == "train":
         train_title = "training_data_" + str(epoch) + "epoch"
         directory = os.path.join("results", save_folder, "Train", train_title + '.png')
@@ -221,8 +220,7 @@ def create_plots_of_loss(dmd_loss_vec_train, ae_loss_vec_train, dmd_loss_vec_tes
     plt.close()
 
 
-def create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results, save_folder,
-                            data_type="train"):
+def create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, epoch, save_folder, data_type="train"):
     # set up a figure twice as wide as it is tall
     fig = plt.figure(figsize=plt.figaspect(0.5))
 
@@ -261,10 +259,7 @@ def create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, 
     loss = format(predictions_train[7].numpy(), ".3E")
     ax.text2D(0.05, 0.95, "Latent space predicted decoded, loss = " + str(loss), transform=ax.transAxes)
 
-    fig.suptitle("Epoch: {}/{}, Learn Rate: {}, Loss: {:.3f}".format(epoch,
-                                                                     hyp_params['num_epochs'],
-                                                                     hyp_params['lr'],
-                                                                     np.log10(train_loss_results[-1])))
+    fig.suptitle("Epoch: {}/{}, Learn Rate: {}".format(epoch, hyp_params['num_epochs'], format(hyp_params['lr'], ".3E")))
     if data_type == "train":
         train_title = "training_data_" + str(epoch) + "epoch"
         directory = os.path.join("results", save_folder, "Train", train_title + '.png')
@@ -277,7 +272,7 @@ def create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, 
     plt.close()
 
 
-def create_plots_fluid_latent(predictions_train, hyp_params, epoch, train_loss_results, save_folder, data_type="train"):
+def create_plots_fluid_latent(predictions_train, hyp_params, epoch, save_folder, data_type="train"):
     # set up a figure twice as wide as it is tall
     fig = plt.figure(figsize=plt.figaspect(0.5))
 
@@ -316,10 +311,7 @@ def create_plots_fluid_latent(predictions_train, hyp_params, epoch, train_loss_r
     latent_loss = format(predictions_train[5].numpy(), ".3E")
     ax.text2D(0.05, 0.95, "Latent space predicted, loss = " + str(latent_loss), transform=ax.transAxes)
 
-    fig.suptitle("Epoch: {}/{}, Learn Rate: {}, Loss: {:.3f}".format(epoch,
-                                                                     hyp_params['num_epochs'],
-                                                                     hyp_params['lr'],
-                                                                     np.log10(train_loss_results[-1])))
+    fig.suptitle("Epoch: {}/{}, Learn Rate: {}".format(epoch, hyp_params['num_epochs'], format(hyp_params['lr'], ".3E")))
     if data_type == "train":
         train_title = "training_latent_" + str(epoch) + "epoch"
         directory = os.path.join("results", save_folder, "Train", train_title + '.png')

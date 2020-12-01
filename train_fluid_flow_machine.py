@@ -188,16 +188,13 @@ while epoch < (hyp_params['num_epochs']):
 
     if epoch % 15 == 0:
         # save plots in results folder. Plot the latent space, ae_reconstruction, and input_batch.
-        create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, epoch, train_loss_results,
-                                save_folder, "train")
-        create_plots_fluid_pred(batch_test_data, predictions_test, hyp_params, epoch, test_loss_results, save_folder,
-                                "test")
+        create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, epoch, save_folder, "train")
+        create_plots_fluid_pred(batch_test_data, predictions_test, hyp_params, epoch, save_folder, "test")
 
         # fluid latent space plots.
-        create_plots_fluid_latent(predictions_train, hyp_params, epoch, train_loss_results, save_folder,
-                                  data_type="train")
-        create_plots_fluid_latent(predictions_test, hyp_params, epoch, train_loss_results, save_folder,
-                                  data_type="test")
+        create_plots_fluid_latent(predictions_train, hyp_params, epoch,  save_folder, data_type="train")
+        create_plots_fluid_latent(predictions_test, hyp_params, epoch, save_folder, data_type="test")
+
     if epoch % 10 == 0:
         # plot latent, input and reconstructed ae latest batch data.
         print_status_bar(epoch, hyp_params["num_epochs"], epoch_loss_avg_train.result(),
