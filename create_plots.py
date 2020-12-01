@@ -29,7 +29,8 @@ def new_plot_model(test_run, random_batch):
     ax[0][1].grid()
     ax[0][1].set_xlabel("$x_{1}$", fontsize=15)
     ax[0][1].set_ylabel("$x_{2}$", fontsize=15)
-    ax[0][1].set_title("Autoencoder reconsturction= " + str(np.log10(test_run[3].numpy())), fontsize=15)
+    ae_loss = format(test_run[3].numpy(), ".3E")
+    ax[0][1].set_title("Autoencoder reconsturction = " + str(ae_loss), fontsize=15)
 
     modeled_data = test_run[1].numpy()
     for ii in range(0, modeled_data.shape[0]):
@@ -40,7 +41,8 @@ def new_plot_model(test_run, random_batch):
     ax[1][0].grid()
     ax[1][0].set_xlabel("$y_{1}$", fontsize=15)
     ax[1][0].set_ylabel("$y_{2}$", fontsize=15)
-    ax[1][0].set_title("Latent space, DMD loss = " + str(np.log10(test_run[2].numpy())), fontsize=15)
+    dmd_loss = format(test_run[2].numpy(), ".3E")
+    ax[1][0].set_title("Latent space, DMD loss = " + str(dmd_loss), fontsize=15)
 
     pred_data = test_run[4].numpy()
     for ii in range(0, pred_data.shape[0]):
@@ -51,8 +53,8 @@ def new_plot_model(test_run, random_batch):
     ax[1][1].grid()
     ax[1][1].set_xlabel("$y_{1}$", fontsize=15)
     ax[1][1].set_ylabel("$y_{2}$", fontsize=15)
-    ax[1][1].set_title("Latent space predicted, dmd reconstruction loss = " + str(np.log10(test_run[5].numpy())), \
-                       fontsize=15)
+    pred_loss = format(test_run[5].numpy(), ".3E")
+    ax[1][1].set_title("Latent space predicted, dmd reconstruction loss = " + str(pred_loss), fontsize=15)
 
     ax[0][0].axis("equal")
     ax[0][1].axis("equal")

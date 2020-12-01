@@ -6,7 +6,7 @@ $$\dot{x_{2}} = -\sin(x_{1})$$
 
 with the potential function $\frac{1}{2}x_{2}^{2} - \cos(x_{1})$.
 
-Given the input data we measure the dynamic mode decomposition accuracy by equation (6) and (7). As a result, $L_{2} = 4.363 × 10^{-2}$ and $L_{3} = 3.35 × 10^{-3}$, whereas in the latent space dataset $Y$, $L_{2} =  1.8 × 10^{-4}$ and $L_{3} = 2.588 × 10^{-5}$. These results show that the encoder network finds a mapping which the nonlinear dynamics become approximately linear. 
+Given the input data we measure the dynamic mode decomposition accuracy by equation (6) and (7). As a result, $L_{2} = 1.574 × 10^{-1}$ and $L_{3} = 2.658 × 10^{-2}$, whereas in the latent space dataset $Y$, $L_{2} =  1.737 x 10^{-3}$ and $L_{3} = 9.51 x 10^{-4}$. These results show that the encoder network finds a mapping which the nonlinear dynamics become approximately linear. 
 
 ![](images/figure3.png)
 
