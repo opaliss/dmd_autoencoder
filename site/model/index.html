@@ -339,9 +339,15 @@
                 <h1 id="dmd-autoencoder">DMD Autoencoder</h1>
 <p><img alt="" src="../images/model_arc_pp.PNG" /></p>
 <p>The figure above illustrates the simple DMD autoencoder architecture. The input time sequential dataset <span><span class="MathJax_Preview">X</span><script type="math/tex">X</script></span> is passed to the encoder which is a nonlinear mapping <span><span class="MathJax_Preview">g</span><script type="math/tex">g</script></span>. The encoder output is called the latent space <span><span class="MathJax_Preview">y_{k} = g(x_{k})</span><script type="math/tex">y_{k} = g(x_{k})</script></span>. The latent space <span><span class="MathJax_Preview">Y</span><script type="math/tex">Y</script></span> is predicted by the Dynamic Mode Decomposition, <span><span class="MathJax_Preview">\tilde y_{k+1}</span><script type="math/tex">\tilde y_{k+1}</script></span> = <span><span class="MathJax_Preview">A^{k}y_{0}</span><script type="math/tex">A^{k}y_{0}</script></span>. Both the latent space <span><span class="MathJax_Preview">Y</span><script type="math/tex">Y</script></span> and predicted latent space <span><span class="MathJax_Preview">\tilde{Y}</span><script type="math/tex">\tilde{Y}</script></span> are passed to the decoder <span><span class="MathJax_Preview">g^{-1}</span><script type="math/tex">g^{-1}</script></span>. Lastly, the decoder outputs <span><span class="MathJax_Preview">g^{-1}(Y)</span><script type="math/tex">g^{-1}(Y)</script></span> and <span><span class="MathJax_Preview">g^{-1}(\tilde{Y})</span><script type="math/tex">g^{-1}(\tilde{Y})</script></span>.</p>
-<p>Important subroutines: 
-- <code>dmd_machine/autoencoder_network.py</code> - The Autoencoder network is a Keras sequential model. 
-- <code>dmd_machine/dmd_ae_machine.py</code> - The DMD Autoencoder, computes the predicted latent <span><span class="MathJax_Preview">\tilde{Y}</span><script type="math/tex">\tilde{Y}</script></span> by the dynamic mode decomposition algorithm. </p>
+<p>Important subroutines: </p>
+<ul>
+<li>
+<p><code>dmd_machine/autoencoder_network.py</code> - The Autoencoder network is a Keras sequential model. </p>
+</li>
+<li>
+<p><code>dmd_machine/dmd_ae_machine.py</code> - The DMD Autoencoder, computes the predicted latent <span><span class="MathJax_Preview">\tilde{Y}</span><script type="math/tex">\tilde{Y}</script></span> by the dynamic mode decomposition algorithm. </p>
+</li>
+</ul>
                 
               
               
