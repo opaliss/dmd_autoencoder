@@ -337,7 +337,7 @@
                 
                 
                 <h1 id="dmd-autoencoder">DMD Autoencoder</h1>
-<p>Prediction, estimation, and control of dynamical systems remains challenging due to the nonlinear dynamics most systems hold. However, recent advances in leveraging deep learning to identifying coordinate transformations that make strongly nonlinear dynamics approximately linear have enabled analyzing nonlinear systems. We propose a simple approach to find these coordinate transformations. The proposed approach identifies a nonlinear mapping to a space where dynamics are linear using a deep autoencoder. The autoencoder minimizes the loss of the autoencoder reconstruction and dynamic mode decomposition reconstruction of the latent space trajectories. This simple DMD autoencoder is tested on dynamical system time series datasets, including the pendulum and fluid flow around a cylinder.</p>
+<p>Prediction, estimation, and control of dynamical systems remains challenging due to the nonlinear dynamics most systems hold. However, recent advances in leveraging deep learning to identify coordinate transformations that make strongly nonlinear dynamics approximately linear have enabled analyzing nonlinear systems. We propose a simple approach to find these coordinate transformations. The proposed approach identifies a nonlinear mapping to a space where dynamics are linear using a deep autoencoder. The autoencoder minimizes the loss of the autoencoder reconstruction and dynamic mode decomposition reconstruction of the latent space trajectories. This simple DMD autoencoder is tested on dynamical system time series datasets, including the pendulum and fluid flow around a cylinder.</p>
 <p>The initial research steps were to reproduce the results in "Deep learning for universal linear embeddings of nonlinear dynamics" by Lusch et al <a href="https://arxiv.org/pdf/1712.09707.pdf">[1]</a>. In this process, we rebuilt their code in an upgraded library Tensorflow 2.0. Since the performance of the Koopman autoencoder highly depended on the weight initialization, we developed a simple Dynamic Mode Decomposition (DMD) autoencoder as a pretrain to Koopman autoencoder model. </p>
 <p>This is a collection of Python subroutines and examples that illustrate how to train a Dynamic Mode Decomposition autoencoder. </p>
 <h1 id="dependencies">Dependencies:</h1>
@@ -383,10 +383,14 @@
 </td></tr></table>
 </li>
 </ul>
-<h1 id="authors">Authors</h1>
-<ul>
-<li>Opal Issan (opal.issan@gmail.com)</li>
-</ul>
+<h1 id="about-the-authors">About the Authors</h1>
+<p>Mathematics Department, San Diego State University 
+Research project under the supervision of Professor Christopher Curtis (ccurtis@sdsu.edu). </p>
+<p>Research group: 
+Opal Issan- Applied Mathematics undergraduate student (opal.issan@gmail.com)
+Jay Lago- Computational Science PhD student (jaylago@gmail.com)
+Joseph Diaz- Applied Mathematics Undergraduate student (joseph.a.g.diaz@gmail.com)
+Robby Simpson- Applied Mathematics Masters student (robby.c.simpson@gmail.com)</p>
                 
               
               
