@@ -44,7 +44,14 @@ The most important Python subroutines are:
 
 
 
-# Authors
-- Opal Issan (opal.issan@gmail.com)
-        
+# About the Authors
+Mathematics Department, San Diego State University 
+Research project under the supervision of Professor Christopher Curtis (ccurtis@sdsu.edu). 
+
+Research group: 
+Opal Issan- Applied Mathematics undergraduate student (opal.issan@gmail.com)
+Jay Lago- Computational Science PhD student (jaylago@gmail.com)
+Joseph Diaz- Applied Mathematics Undergraduate student (joseph.a.g.diaz@gmail.com)
+Robby Simpson- Applied Mathematics Masters student (robby.c.simpson@gmail.com)
+
 
