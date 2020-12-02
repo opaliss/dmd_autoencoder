@@ -339,16 +339,16 @@
                 <h1 id="fluid-flow-dataset">Fluid Flow Dataset</h1>
 <p>Consider the nonlinear mean-field model of fluid flow past a circular cylinder at Reynolds number 100, described by empirical Galerkin model:</p>
 <div>
-<div class="MathJax_Preview"> \frac{\partial x_{1}}{\partial t} = \mu x_{1} - \omega x_{2} + A x_{1} x_{3} </div>
-<script type="math/tex; mode=display"> \frac{\partial x_{1}}{\partial t} = \mu x_{1} - \omega x_{2} + A x_{1} x_{3} </script>
+<div class="MathJax_Preview"> \dot{x_{1}} = \mu x_{1} - \omega x_{2} + A x_{1} x_{3} </div>
+<script type="math/tex; mode=display"> \dot{x_{1}} = \mu x_{1} - \omega x_{2} + A x_{1} x_{3} </script>
 </div>
 <div>
-<div class="MathJax_Preview"> \frac{\partial x_{2}}{\partial t} = \omega x_{1}  + \mu x_{2} + A x_{2} x_{3} </div>
-<script type="math/tex; mode=display"> \frac{\partial x_{2}}{\partial t} = \omega x_{1}  + \mu x_{2} + A x_{2} x_{3} </script>
+<div class="MathJax_Preview"> \dot{x_{2}} = \omega x_{1}  + \mu x_{2} + A x_{2} x_{3} </div>
+<script type="math/tex; mode=display"> \dot{x_{2}} = \omega x_{1}  + \mu x_{2} + A x_{2} x_{3} </script>
 </div>
 <div>
-<div class="MathJax_Preview"> \frac{\partial x_{3}}{\partial t} =  -\lambda (x_{3} - x_{1}^{2} - x_{2}^{2})</div>
-<script type="math/tex; mode=display"> \frac{\partial x_{3}}{\partial t} =  -\lambda (x_{3} - x_{1}^{2} - x_{2}^{2})</script>
+<div class="MathJax_Preview"> \dot{x_{3}} =  -\lambda (x_{3} - x_{1}^{2} - x_{2}^{2})</div>
+<script type="math/tex; mode=display"> \dot{x_{3}} =  -\lambda (x_{3} - x_{1}^{2} - x_{2}^{2})</script>
 </div>
 <p>Where <span><span class="MathJax_Preview">\mu=0.1</span><script type="math/tex">\mu=0.1</script></span>, <span><span class="MathJax_Preview">\omega=1</span><script type="math/tex">\omega=1</script></span>, <span><span class="MathJax_Preview">A=-0.1</span><script type="math/tex">A=-0.1</script></span>, <span><span class="MathJax_Preview">\lambda = 10</span><script type="math/tex">\lambda = 10</script></span>. </p>
 <p>The slow manifold toward the limit cycle:
