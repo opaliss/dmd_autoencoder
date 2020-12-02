@@ -8,6 +8,7 @@ from dmd_machine.dmd_ae_machine import DMDMachine
 from dmd_machine.loss_function import LossFunction
 from data.Data import DataMaker
 from tensorflow import keras
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import model_from_json
 from return_stats import *
 from create_plots import *
@@ -50,17 +51,6 @@ hyp_params['c3'] = 1  # coefficient of pred loss.
 save_folder = "AeEx2_" + str(date.today().isoformat()) # save results in the folder " Results/save_folder"-
 # including loss curves and plot latent data.
 
-# convert input data from numpy to tensorflow.
-input_data = training_data.data_val
-all_data = tf.data.Dataset.from_tensor_slices(input_data)
-
-# shuffle the dataset and then divide to training vs testing data sets. 80% training .20% testing.
-all_data_shuffle = all_data.shuffle(hyp_params['num_init_conds'], seed=42)
-data_train = all_data_shuffle.take(int(0.8 * hyp_params['num_init_conds']))
-data_test = all_data_shuffle.skip(int(0.8 * hyp_params['num_init_conds']))
-# data_train = tf.data.Dataset.from_tensor_slices(all_data_shuffle[:0.8 * hyp_params['num_init_conds'], :, :])
-# data_test = tf.data.Dataset.from_tensor_slices(all_data_shuffle[0.8 * hyp_params['num_init_conds']:, :, :])
-
 # number of initial conditions in training and testing dataset.
 hyp_params['num_init_conds_training'] = int(0.8 * hyp_params['num_init_conds'])
 hyp_params['num_init_conds_test'] = hyp_params['num_init_conds'] - hyp_params['num_init_conds_training']
@@ -83,6 +73,31 @@ create_new_folders(save_folder)
 
 # save hyperparams in a json file.
 save_hyp_params_in_json(hyp_params=hyp_params, json_file_path=os.path.join("results", save_folder, "hyp_params.txt"))
+
+
+# ======================================================================================================================
+# Prepare dataset.
+# ======================================================================================================================
+# shuffle the dataset and then divide to training vs testing data sets. 80% training .20% testing.
+data_train, data_test = train_test_split(input_data, test_size=0.2, random_state=42)
+
+print("dimensions of training dataset (ic x phys_dim x timesteps) = ", np.shape(data_train))
+print("dimensions of testing dataset (ic x phys_dim x timesteps) = ", np.shape(data_test))
+
+# ======================================================================================================================
+# Unit test to verify that testing and training datasets are disjoint.
+# ======================================================================================================================
+for ic_train in data_train:
+    for ic_test in data_test:
+        if ic_test[:, 0][0] == ic_train[:, 0][0] and ic_test[:, 0][1] == ic_train[:, 0][1]\
+        and ic_test[:, 0][2] == ic_train[:, 0][2]:
+            print("Testing and Training datasets intersect!")
+            print(ic_test[:, 0])
+
+
+# convert datasets from numpy to tensorflow.
+data_train = tf.data.Dataset.from_tensor_slices(data_train)
+data_test = tf.data.Dataset.from_tensor_slices(data_test)
 
 # ======================================================================================================================
 # Begin training model
