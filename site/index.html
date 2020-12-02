@@ -201,9 +201,66 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Home
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
     <a href="." class="md-nav__link md-nav__link--active">
       Home
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    Dependencies
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    License
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-python-subroutines" class="md-nav__link">
+    Important Python subroutines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-authors" class="md-nav__link">
+    About the Authors
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -321,6 +378,49 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    Dependencies
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    License
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-python-subroutines" class="md-nav__link">
+    Important Python subroutines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-authors" class="md-nav__link">
+    About the Authors
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -340,7 +440,7 @@
 <p>Prediction, estimation, and control of dynamical systems remains challenging due to the nonlinear dynamics most systems hold. However, recent advances in leveraging deep learning to identify coordinate transformations that make strongly nonlinear dynamics approximately linear have enabled analyzing nonlinear systems. We propose a simple approach to find these coordinate transformations. The proposed approach identifies a nonlinear mapping to a space where dynamics are linear using a deep autoencoder. The autoencoder minimizes the loss of the autoencoder reconstruction and dynamic mode decomposition reconstruction of the latent space trajectories. This simple DMD autoencoder is tested on dynamical system time series datasets, including the pendulum and fluid flow around a cylinder.</p>
 <p>The initial research steps were to reproduce the results in "Deep learning for universal linear embeddings of nonlinear dynamics" by Lusch et al <a href="https://arxiv.org/pdf/1712.09707.pdf">[1]</a>. In this process, we rebuilt their code in an upgraded library Tensorflow 2.0. Since the performance of the Koopman autoencoder highly depended on the weight initialization, we developed a simple Dynamic Mode Decomposition (DMD) autoencoder as a pretrain to Koopman autoencoder model. </p>
 <p>This is a collection of Python subroutines and examples that illustrate how to train a Dynamic Mode Decomposition autoencoder. </p>
-<h1 id="dependencies">Dependencies:</h1>
+<h2 id="dependencies">Dependencies</h2>
 <ol>
 <li><a href="https://www.python.org/downloads/">Python &gt;= 3.7</a></li>
 <li><a href="https://numpy.org/install/">numpy &gt;= 1.19.1</a></li>
@@ -348,10 +448,10 @@
 <li><a href="https://matplotlib.org/users/installing.html">matplotlib &gt;= 3.3.1</a></li>
 <li><a href="https://pypi.org/project/pydmd/">pydmd &gt;=0.3</a></li>
 </ol>
-<h1 id="references">References</h1>
+<h2 id="references">References</h2>
 <p>[1] <a href="https://arxiv.org/pdf/1712.09707.pdf">Bethany Lusch, J. Nathan Kutz, and Steven L. Brunton. Deep learning for universal linear embeddings of nonlinear dynamics. Nature Communications, 9(1):4950, 2018.</a></p>
 <p>[2] <a href="https://arxiv.org/abs/1312.0041">J. H. Tu, C. W. Rowley, D. M. Luchtenburg, S. L. Brunton, and J. Nathan Kutz. On dynamic mode decomposition: theory and applications. J. Comp. Dyn., 1(2):391-421, 2014.</a></p>
-<h1 id="license">License</h1>
+<h2 id="license">License</h2>
 <p><a href="https://choosealicense.com/licenses/mit/">MIT</a></p>
 <h2 id="important-python-subroutines">Important Python subroutines</h2>
 <p>The most important Python subroutines are:</p>
@@ -383,14 +483,14 @@
 </td></tr></table>
 </li>
 </ul>
-<h1 id="about-the-authors">About the Authors</h1>
+<h2 id="about-the-authors">About the Authors</h2>
 <p>Mathematics Department, San Diego State University 
 Research project under the supervision of Professor Christopher Curtis (ccurtis@sdsu.edu). </p>
 <p>Research group: 
-Opal Issan- Applied Mathematics undergraduate student (opal.issan@gmail.com)
-Jay Lago- Computational Science PhD student (jaylago@gmail.com)
-Joseph Diaz- Applied Mathematics Undergraduate student (joseph.a.g.diaz@gmail.com)
-Robby Simpson- Applied Mathematics Masters student (robby.c.simpson@gmail.com)</p>
+- Opal Issan- Applied Mathematics undergraduate student (opal.issan@gmail.com)
+- Jay Lago- Computational Science PhD student (jaylago@gmail.com)
+- Joseph Diaz- Applied Mathematics Undergraduate student (joseph.a.g.diaz@gmail.com)
+- Robby Simpson- Applied Mathematics Masters student (robby.c.simpson@gmail.com)</p>
                 
               
               
