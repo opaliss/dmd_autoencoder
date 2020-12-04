@@ -11,3 +11,10 @@ Given the input data we measure the dynamic mode decomposition accuracy by equat
 ![](images/figure3.png)
 
 The figure above shows the phase portrait of the nonlinear pendulum. The simple DMD autoencoder attempts to reconstruct the input data and is shown in figure 1b. Figure 1c shows the dynamic mode decomposition reconstruction of the latent space forming near circles. The simple DMD autoencoder does not account for continuous spectra and is used as a pretrain for the Koopman autoencoder developed by Lusch et al [[1]]((https://arxiv.org/pdf/1712.09707.pdf)). This model is saved under `models/my_model_Ex2_oct21` and can be loaded easily, see the Jupyter notebook `compare_full_machine_results_pendulum.ipynb`. 
+
+
+Training and Testing dataset loss curve.
+
+![](images/loss_curve_at_250epoch_pen.png)
+
+ 
