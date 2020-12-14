@@ -1,0 +1,21 @@
+{
+    "num_t_steps": 51,
+    "phys_dim": 2,
+    "num_init_conds": 10000,
+    "batch_size": 256,
+    "num_epochs": 200,
+    "num_en_layers": 2,
+    "num_en_neurons": 80,
+    "latent_dim": 2,
+    "window_size": 256,
+    "activation": "elu",
+    "weight_initializer": "he_uniform",
+    "bias_initializer": "he_uniform",
+    "c1": 10,
+    "c2": 1,
+    "c3": 1,
+    "num_init_conds_training": 8000,
+    "num_init_conds_test": 2000,
+    "initial_learning_rate": 0.003,
+    "esteps": 30
+}

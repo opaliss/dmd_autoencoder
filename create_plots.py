@@ -220,7 +220,7 @@ def create_plots_of_loss(dmd_loss_vec_train, ae_loss_vec_train, dmd_loss_vec_tes
     plt.close()
 
 
-def create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, epoch, save_folder, data_type="train"):
+def create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, epoch, save_folder, data_type="train", compare_models=False):
     # set up a figure twice as wide as it is tall
     fig = plt.figure(figsize=plt.figaspect(0.5))
 
@@ -259,20 +259,21 @@ def create_plots_fluid_pred(batch_training_data, predictions_train, hyp_params, 
     loss = format(predictions_train[7].numpy(), ".3E")
     ax.text2D(0.05, 0.95, "Latent space predicted decoded, loss = " + str(loss), transform=ax.transAxes)
 
-    fig.suptitle("Epoch: {}/{}, Learn Rate: {}".format(epoch, hyp_params['num_epochs'], format(hyp_params['lr'], ".3E")))
-    if data_type == "train":
-        train_title = "training_data_" + str(epoch) + "epoch"
-        directory = os.path.join("results", save_folder, "Train", train_title + '.png')
-        plt.savefig(directory, facecolor=fig.get_facecolor())
+    if compare_models is False:
+        fig.suptitle("Epoch: {}/{}, Learn Rate: {}".format(epoch, hyp_params['num_epochs'], format(hyp_params['lr'], ".3E")))
+        if data_type == "train":
+            train_title = "training_data_" + str(epoch) + "epoch"
+            directory = os.path.join("results", save_folder, "Train", train_title + '.png')
+            plt.savefig(directory, facecolor=fig.get_facecolor())
 
-    if data_type == "test":
-        test_title = "test_data_" + str(epoch) + "epoch"
-        directory = os.path.join("results", save_folder, "Test", test_title + '.png')
-        plt.savefig(directory, facecolor=fig.get_facecolor())
-    plt.close()
+        if data_type == "test":
+            test_title = "test_data_" + str(epoch) + "epoch"
+            directory = os.path.join("results", save_folder, "Test", test_title + '.png')
+            plt.savefig(directory, facecolor=fig.get_facecolor())
+        plt.close()
 
-
-def create_plots_fluid_latent(predictions_train, hyp_params, epoch, save_folder, data_type="train"):
+    
+def create_plots_fluid_latent_3d(predictions_train, hyp_params, epoch, save_folder, data_type="train"):
     # set up a figure twice as wide as it is tall
     fig = plt.figure(figsize=plt.figaspect(0.5))
 
@@ -322,3 +323,55 @@ def create_plots_fluid_latent(predictions_train, hyp_params, epoch, save_folder,
         directory = os.path.join("results", save_folder, "Test", test_title + '.png')
         plt.savefig(directory, facecolor=fig.get_facecolor())
     plt.close()
+    
+    
+def create_plots_fluid_latent_2d(predictions_train, hyp_params, epoch, save_folder, data_type="train", compare_models=False):
+    # set up a figure twice as wide as it is tall
+    fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(15, 30))
+    
+    rect = fig.patch
+    rect.set_facecolor("white")
+    # set up the axes for the first plot
+    y = predictions_train[1]
+    for ii in range(0, y.shape[0]):
+        x1 = y[ii, 0, :]
+        x2 = y[ii, 1, :]
+        ax[0].plot(x1, x2)
+
+    ax[0].set_xlabel("$x_{1}$")
+    ax[0].set_ylabel("$x_{2}$")
+
+    if data_type == "train":
+        ax[0].set_title("Latent training dataset")
+    if data_type == "test":
+        ax[0].set_title("Latent testing dataset")
+
+    y_predict = predictions_train[4].numpy()
+    for ii in range(0, y_predict.shape[0]):
+        x1 = y_predict[ii, 0, :]
+        x2 = y_predict[ii, 1, :]
+        ax[1].plot(x1, x2)
+
+    ax[1].set_xlabel("$x_{1}$")
+    ax[1].set_ylabel("$x_{2}$")
+    
+    ax[0].axis("equal")
+    ax[1].axis("equal")
+    
+    latent_loss = format(predictions_train[5].numpy(), ".3E")
+    ax[1].set_title("Latent space predicted, loss = " + str(latent_loss))
+    
+    
+    if compare_models is False:
+        fig.suptitle("Epoch: {}/{}, Learn Rate: {}".format(epoch, hyp_params['num_epochs'], format(hyp_params['lr'], ".3E")))
+        if data_type == "train":
+            train_title = "training_latent_" + str(epoch) + "epoch"
+            directory = os.path.join("results", save_folder, "Train", train_title + '.png')
+            plt.savefig(directory, facecolor=fig.get_facecolor())
+
+        if data_type == "test":
+            test_title = "test_latent_" + str(epoch) + "epoch"
+            directory = os.path.join("results", save_folder, "Test", test_title + '.png')
+            plt.savefig(directory, facecolor=fig.get_facecolor())
+        plt.close()
+

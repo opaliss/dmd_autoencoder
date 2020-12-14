@@ -329,6 +329,8 @@
 <p>Given the input data we measure the dynamic mode decomposition accuracy by equation (6) and (7). As a result, <span><span class="MathJax_Preview">L_{2} = 1.574 × 10^{-1}</span><script type="math/tex">L_{2} = 1.574 × 10^{-1}</script></span> and <span><span class="MathJax_Preview">L_{3} = 2.658 × 10^{-2}</span><script type="math/tex">L_{3} = 2.658 × 10^{-2}</script></span>, whereas in the latent space dataset <span><span class="MathJax_Preview">Y</span><script type="math/tex">Y</script></span>, <span><span class="MathJax_Preview">L_{2} =  1.737 × 10^{-3}</span><script type="math/tex">L_{2} =  1.737 × 10^{-3}</script></span> and <span><span class="MathJax_Preview">L_{3} = 9.51 × 10^{-4}</span><script type="math/tex">L_{3} = 9.51 × 10^{-4}</script></span>. These results show that the encoder network finds a mapping which the nonlinear dynamics become approximately linear. </p>
 <p><img alt="" src="../images/figure3.png" /></p>
 <p>The figure above shows the phase portrait of the nonlinear pendulum. The simple DMD autoencoder attempts to reconstruct the input data and is shown in figure 1b. Figure 1c shows the dynamic mode decomposition reconstruction of the latent space forming near circles. The simple DMD autoencoder does not account for continuous spectra and is used as a pretrain for the Koopman autoencoder developed by Lusch et al <a href="(https://arxiv.org/pdf/1712.09707.pdf)">[1]</a>. This model is saved under <code>models/my_model_Ex2_oct21</code> and can be loaded easily, see the Jupyter notebook <code>compare_full_machine_results_pendulum.ipynb</code>. </p>
+<p>Training and Testing dataset loss curve.</p>
+<p><img alt="" src="../images/loss_curve_at_250epoch_pen.png" /></p>
                 
               
               
