@@ -11,7 +11,7 @@ $$ \dot{x_{3}} =  -\lambda (x_{3} - x_{1}^{2} - x_{2}^{2})$$
 Where $\mu=0.1$, $\omega=1$, $A=-0.1$, $\lambda = 10$. 
 
 The slow manifold toward the limit cycle, DMD Autoencoder results: 
-![](images/fluidrec.png)
+![](images/fig3withcap.png)
 
 
 ![](images/latent_fluid_slow.PNG)
