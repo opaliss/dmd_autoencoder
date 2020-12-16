@@ -14,7 +14,7 @@ The slow manifold toward the limit cycle:
 ![](images/fluid_flow.png)
 
 DMD Autoencoder results: 
-![](images/fig3withcap.PNG)
+![](images/fluidrec.png)
 
 
 ![](images/latent_fluid_slow.PNG)
