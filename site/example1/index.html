@@ -62,6 +62,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#dmd-autoencoder-results" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -242,9 +247,36 @@
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Discrete Dataset
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
     <a href="./" class="md-nav__link md-nav__link--active">
       Discrete Dataset
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dmd-autoencoder-results" class="md-nav__link">
+    DMD Autoencoder Results
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -304,6 +336,34 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dmd-autoencoder-results" class="md-nav__link">
+    DMD Autoencoder Results
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -326,7 +386,94 @@
 <script type="math/tex; mode=display">\dot{x_{2}} = \lambda (x_{2} - x_{1}^{2})</script>
 </div>
 <p><img alt="" src="../images/ex1_data.png" /></p>
-<p>Given the input data we measure the dynamic mode decomposition accuracy by equation (6) and (7). As a result, <span><span class="MathJax_Preview">L_{2} =  3.27 × 10^{-4}</span><script type="math/tex">L_{2} =  3.27 × 10^{-4}</script></span> and <span><span class="MathJax_Preview">L_{3} = 5.055 × 10^{-5}</span><script type="math/tex">L_{3} = 5.055 × 10^{-5}</script></span>, whereas in the latent space dataset <span><span class="MathJax_Preview">Y</span><script type="math/tex">Y</script></span>, <span><span class="MathJax_Preview">L_{2} =  3.006 × 10^{-4}</span><script type="math/tex">L_{2} =  3.006 × 10^{-4}</script></span> and <span><span class="MathJax_Preview">L_{3} = 2.703 × 10^{-4}</span><script type="math/tex">L_{3} = 2.703 × 10^{-4}</script></span>. While the DMD loss decreased, the predictability loss did not improve. There is more room for improvement by adjusting the network's hyper-parameters. </p>
+<p>Analytic Koopman Embedding 
+This system has a three-dimensional Koopman invariant space. </p>
+<div>
+<div class="MathJax_Preview"> y_{1} = x_{1} </div>
+<script type="math/tex; mode=display"> y_{1} = x_{1} </script>
+</div>
+<div>
+<div class="MathJax_Preview"> y_{2} = x_{2} </div>
+<script type="math/tex; mode=display"> y_{2} = x_{2} </script>
+</div>
+<div>
+<div class="MathJax_Preview"> y_{3} = x_{1}^{2}</div>
+<script type="math/tex; mode=display"> y_{3} = x_{1}^{2}</script>
+</div>
+<p>Therefore, the nonlinear system <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> can be transformed to a new coordinate system where dynamics are linear 
+(in the form of <a href="../dmd/">equation (1) and (2)</a>). </p>
+<div>
+<div class="MathJax_Preview"> \dot{y_{1}} = \dot{x_{1}} = \mu x_{1}  = \mu y_{1} </div>
+<script type="math/tex; mode=display"> \dot{y_{1}} = \dot{x_{1}} = \mu x_{1}  = \mu y_{1} </script>
+</div>
+<div>
+<div class="MathJax_Preview"> \dot{y_{2}} = \dot{x_{2}} = \lambda (x_{2} - x_{1}^{2}) = \lambda (y_{2} - y_{3}) </div>
+<script type="math/tex; mode=display"> \dot{y_{2}} = \dot{x_{2}} = \lambda (x_{2} - x_{1}^{2}) = \lambda (y_{2} - y_{3}) </script>
+</div>
+<div>
+<div class="MathJax_Preview"> \dot{y_{3}} = \dot{x_{1}^{2}} = 2 x_{1} \dot{x_{1}} = 2 x_{1} \mu x_{1} = 2 \mu x_{1}^{2} </div>
+<script type="math/tex; mode=display"> \dot{y_{3}} = \dot{x_{1}^{2}} = 2 x_{1} \dot{x_{1}} = 2 x_{1} \mu x_{1} = 2 \mu x_{1}^{2} </script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{equation} \label{eq:1}
+ \frac{d}{dt}
+ \begin{bmatrix}
+        y_{1}\\
+        y_{2}\\
+        y_{3}
+    \end{bmatrix} = 
+    \begin{bmatrix}
+        \mu &amp; 0 &amp; 0 \\
+        0 &amp; \lambda &amp; -\lambda\\
+        0 &amp; 0 &amp; 2\mu
+    \end{bmatrix}
+    \begin{bmatrix}
+        y_{1}\\
+        y_{2}\\
+        y_{3}
+    \end{bmatrix}
+\end{equation}</div>
+<script type="math/tex; mode=display">\begin{equation} \label{eq:1}
+ \frac{d}{dt}
+ \begin{bmatrix}
+        y_{1}\\
+        y_{2}\\
+        y_{3}
+    \end{bmatrix} = 
+    \begin{bmatrix}
+        \mu & 0 & 0 \\
+        0 & \lambda & -\lambda\\
+        0 & 0 & 2\mu
+    \end{bmatrix}
+    \begin{bmatrix}
+        y_{1}\\
+        y_{2}\\
+        y_{3}
+    \end{bmatrix}
+\end{equation}</script>
+</div>
+<p>In order to compare the Dynmaic Mode Decomposition reconstruction accuracy on the two coordinates <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> and <span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>, we evaluated </p>
+<div>
+<div class="MathJax_Preview">\begin{equation} \label{eq:6}
+    \begin{aligned}
+    \left\| X'- AX \right\| _{F}^{2} = \left\| X'- (X' V  \Sigma^{-1} U^{*}) X \right\| _{F}^{2}\\
+    = \left\| X'- (X'  V  \Sigma^{-1}  U^{*}) ( U \Sigma  V^{T}) \right\| _{F}^{2} \\  =\left\| X' ( I - V V^{T}) \right\| _{F}^{2}
+    \end{aligned}
+\end{equation}</div>
+<script type="math/tex; mode=display">\begin{equation} \label{eq:6}
+    \begin{aligned}
+    \left\| X'- AX \right\| _{F}^{2} = \left\| X'- (X' V  \Sigma^{-1} U^{*}) X \right\| _{F}^{2}\\
+    = \left\| X'- (X'  V  \Sigma^{-1}  U^{*}) ( U \Sigma  V^{T}) \right\| _{F}^{2} \\  =\left\| X' ( I - V V^{T}) \right\| _{F}^{2}
+    \end{aligned}
+\end{equation}</script>
+</div>
+<p>where in the <span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span> coordinate system dynamic mode decomposition reconstruction was able to recover twice as many significant figures in comparison to the <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> coordinate. </p>
+<ul>
+<li>Related notebooks: <code>dmd_autoencoder_discrete_train.ipynb</code> and <code>compare_full_machine_results_discrete_dataset.ipynb</code> </li>
+</ul>
+<h2 id="dmd-autoencoder-results">DMD Autoencoder Results</h2>
+<p>The Dynamic Mode Decomposition Autoencoder attempted to find a nonlinear mapping <span><span class="MathJax_Preview">g</span><script type="math/tex">g</script></span> which is also called the encoder to a space where the dynamics are linear. While the analysis about shows that the Koopman invariant space is three-dimensional for this example, we trained the model to have a latent space of two-dimensions. </p>
+<!---  As a result, $L_{2} =  3.27 × 10^{-4}$ and $L_{3} = 5.055 × 10^{-5}$, whereas in the latent space dataset $Y$, $L_{2} =  3.006 × 10^{-4}$ and $L_{3} = 2.703 × 10^{-4}$. While the DMD loss decreased, the predictability loss did not improve. There is more room for improvement by adjusting the network's hyper-parameters. --->
                 
               
               

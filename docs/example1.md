@@ -59,6 +59,6 @@ where in the $y$ coordinate system dynamic mode decomposition reconstruction was
 
 ## DMD Autoencoder Results
 
-The Dynamic Mode Decomposition Autoencoder attempted to find a nonlinear mapping $g$ which is also called the encoder to a space where the dynamics are linear. While the analysis about shows that the Koopman invariant space is three-dimensional for this example, we trained the model to have a latent space of two-dimensions. 
+The Dynamic Mode Decomposition Autoencoder attempted to find a nonlinear mapping $g$ which is also called the encoder to a space where the dynamics are approximately linear.  
 
-<!---  As a result, $L_{2} =  3.27 × 10^{-4}$ and $L_{3} = 5.055 × 10^{-5}$, whereas in the latent space dataset $Y$, $L_{2} =  3.006 × 10^{-4}$ and $L_{3} = 2.703 × 10^{-4}$. While the DMD loss decreased, the predictability loss did not improve. There is more room for improvement by adjusting the network's hyper-parameters. --->
+<!--- While the analysis about shows that the Koopman invariant space is three-dimensional for this example, we trained the model to have a latent space of two-dimensions.  As a result, $L_{2} =  3.27 × 10^{-4}$ and $L_{3} = 5.055 × 10^{-5}$, whereas in the latent space dataset $Y$, $L_{2} =  3.006 × 10^{-4}$ and $L_{3} = 2.703 × 10^{-4}$. While the DMD loss decreased, the predictability loss did not improve. There is more room for improvement by adjusting the network's hyper-parameters. --->
