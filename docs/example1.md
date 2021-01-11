@@ -6,7 +6,8 @@ $$\dot{x_{2}} = \lambda (x_{2} - x_{1}^{2})$$
 
 ![](images/ex1_data.png)
 
-Analytic Koopman Embedding 
+### Analytic Koopman Embedding 
+
 This system has a three-dimensional Koopman invariant space. 
 
 $$ y_{1} = x_{1} $$
@@ -44,7 +45,7 @@ $$ \dot{y_{3}} = \dot{x_{1}^{2}} = 2 x_{1} \dot{x_{1}} = 2 x_{1} \mu x_{1} = 2 \
     \end{bmatrix}
 \end{equation}
 
-In order to compare the Dynmaic Mode Decomposition reconstruction accuracy on the two coordinates $x$ and $y$, we evaluated 
+In order to compare the Dynamic Mode Decomposition reconstruction accuracy on the two coordinates $x$ and $y$, we evaluated 
 
 \begin{equation} \label{eq:6}
     \begin{aligned}

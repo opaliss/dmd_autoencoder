@@ -1,7 +1,7 @@
 		
 # Dynamic Mode Decomposition and the Koopman Operator
      
-Let $x_{t}$ be the state vector of a nonlinear dynamic system. In order to create a linear model, our goal is to fit the dynamical system states to a model of the form:
+Let $x_{t}$ be the state vector of a nonlinear dynamical system. In order to create a linear model, our goal is to fit the dynamical system states to a model of the form:
 
 (1) $$\frac{d}{d t} x = Ax $$
 
@@ -9,7 +9,7 @@ Let $x_{t}$ be the state vector of a nonlinear dynamic system. In order to creat
     
 A nonlinear system can be represented in term of an infinite dimensional operator acting on a Hilbert space of measurement function of the state of the system. The Koopman operator is linear, yet infinite-dimensional. An approximation of the Koopman Operator can be obtained by variants of the Dynamic Mode Decomposition algorithm. 
 
-The Dynamic Mode Decomposition developed by Schmid is a dimensionality reduction algorithm. Given time series dataset, the exact Dynamic Mode Decomposition computes the best fit operator A that advances the system measurements in time [[2]](https://arxiv.org/abs/1312.0041).
+The Dynamic Mode Decomposition developed by Schmid is a dimensionality reduction algorithm. Given time series dataset, the exact Dynamic Mode Decomposition computes the best fit operator $A$ that advances the system measurements in time [[2]](https://arxiv.org/abs/1312.0041).
 The time series dataset can be arranged into two matrices, $X$ and $X'$:
     
 (3)
@@ -36,7 +36,7 @@ The time series dataset can be arranged into two matrices, $X$ and $X'$:
 \end{equation}
 
     
-In order to find the matrix A in equation (1) and (2), we solve the linear system with the DMD algorithm. By the singular value decomposition, $X \approx U \Sigma V^{*}$ where $\tilde{U} \in \mathbb{C}^{n \times r}$, $\tilde{\Sigma} \in \mathbb{C}^{r \times r}$, and $\tilde{V} \in \mathbb{C}^{m \times r}$. Therefore, the matrix A is obtained by $A = X'\tilde{V}\tilde{\Sigma}^{-1}\tilde{U}^{*}$. 
+In order to find the matrix $A$ in equation (1) and (2), we solve the linear system with the DMD algorithm. By the singular value decomposition, $X \approx U \Sigma V^{*}$ where $\tilde{U} \in \mathbb{C}^{n \times r}$, $\tilde{\Sigma} \in \mathbb{C}^{r \times r}$, and $\tilde{V} \in \mathbb{C}^{m \times r}$. Therefore, the matrix A is obtained by $A = X'\tilde{V}\tilde{\Sigma}^{-1}\tilde{U}^{*}$. 
 
 The DMD objective is to minimize the following:
 
@@ -63,4 +63,4 @@ An additional approach to evaluate the DMD fit is by comparing the DMD reconstru
     x_{k} = \sum_{i=1}^{r} \phi_{i} \lambda_{i}^{k-1} b_{i} = \Phi \Lambda^{k-1} b
 \end{equation}
 
-Where $\Phi$ are the eigenvectors of the $A$ matrix, $\lambda$ are the eigenvalues of the $A$ matrix, and b is the mode amplitude. Hence, the DMD reconstruction loss can be computed by the mean squared error of the difference between the input data $X$ and the spectral decomposition in equation (7). 
+Where $\Phi$ are the eigenvectors of the $A$ matrix, $\lambda$ are the eigenvalues of the $A$ matrix, and $b$ is the mode amplitude. Hence, the DMD reconstruction loss can be computed by the mean squared error of the difference between the input data $X$ and the spectral decomposition in equation (7). 

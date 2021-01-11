@@ -1,0 +1,7 @@
+0/200 ,loss_train: 0.018725755 , loss_test: 0.003710584, run time = 588.46875 sec.
+10/200 ,loss_train: 0.00013538999 , loss_test: 0.0001268372, run time = 518.765625 sec.
+20/200 ,loss_train: 6.8380024e-05 , loss_test: 6.487131e-05, run time = 500.953125 sec.
+30/200 ,loss_train: 6.832047e-05 , loss_test: 3.8159404e-05, run time = 554.390625 sec.
+40/200 ,loss_train: 6.01798e-05 , loss_test: 0.00014416594, run time = 552.96875 sec.
+50/200 ,loss_train: 4.7481e-05 , loss_test: 2.9353216e-05, run time = 587.734375 sec.
+60/200 ,loss_train: 9.222638e-05 , loss_test: 5.8471447e-05, run time = 1469.140625 sec.
