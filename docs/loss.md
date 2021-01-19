@@ -1,6 +1,6 @@
 The simple DMD autoencoder loss function is a combination of three evaluations: 
 
-**Autoencoder reconstruction loss** -  This ensures that the original trajectories can be recovered.
+**Autoencoder reconstruction loss** - ensures that the original trajectories can be recovered.
 \begin{equation} \label{eq:8}
 L_{1} = MSE \left\| X - g^{-1}(\tilde{Y}) \right\|
 \end{equation}
