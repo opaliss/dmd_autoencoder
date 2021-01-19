@@ -51,6 +51,10 @@ hyp_params['c3'] = 1  # coefficient of pred loss.
 save_folder = "AeEx2_" + str(date.today().isoformat()) # save results in the folder " Results/save_folder"-
 # including loss curves and plot latent data.
 
+# convert input data from numpy to tensorflow.
+input_data = training_data.data_val
+all_data = tf.data.Dataset.from_tensor_slices(input_data)
+
 # number of initial conditions in training and testing dataset.
 hyp_params['num_init_conds_training'] = int(0.8 * hyp_params['num_init_conds'])
 hyp_params['num_init_conds_test'] = hyp_params['num_init_conds'] - hyp_params['num_init_conds_training']

@@ -1,3 +1,10 @@
+"""
+    Created by:
+        Opal Issan
+
+    Modified:
+        17 Nov 2020 - Jay Lago
+"""
 import pickle
 import matplotlib.pyplot as plt
 import numpy as np
@@ -8,22 +15,21 @@ import numpy as np
 # ==============================================================================
 class DataMaker(object):
 
-    def __init__(self, x_lower1, x_upper1, x_lower2, x_upper2, n_ic, dt, tf, data_type):
+    def __init__(self, x_lower1, x_upper1, x_lower2, x_upper2, n_ic, dt, tf, data_type, testing, path):
         # settings related to dataset
         self.params = dict()
         if data_type == 'discrete':
             self.data_val = time_stepper_discrete(x_lower1=x_lower1, x_upper1=x_upper1,
                                                   x_lower2=x_lower2, x_upper2=x_upper2,
-                                                  n_ic=n_ic, dt=dt, tf=tf)
+                                                  n_ic=n_ic, dt=dt, tf=tf, testing=testing, path=path)
         elif data_type == 'pendulum':
             self.data_val = time_stepper_pendulum(x_lower1=x_lower1, x_upper1=x_upper1,
                                                   x_lower2=x_lower2, x_upper2=x_upper2,
-                                                  n_ic=n_ic, dt=dt, tf=tf)
-
+                                                  n_ic=n_ic, dt=dt, tf=tf, testing=testing, path=path)
         elif data_type == 'fluid_flow_slow':
             self.data_val = time_stepper_fluid_flow_slow(r_lower=x_lower1, r_upper=x_upper1,
                                                          t_lower=x_lower2, t_upper=x_upper2,
-                                                         n_ic=n_ic, dt=dt, tf=tf)
+                                                         n_ic=n_ic, dt=dt, tf=tf, testing=testing, path=path)
         n_i, n_r, n_t = self.data_val.shape
         self.params['data_type'] = data_type
         self.params['num_time_steps'] = n_t
@@ -89,7 +95,7 @@ def rk4(lhs, dt, function):
     return rhs
 
 
-def time_stepper_discrete(x_lower1, x_upper1, x_lower2, x_upper2, n_ic=1e4, dt=0.02, tf=1.0):
+def time_stepper_discrete(x_lower1, x_upper1, x_lower2, x_upper2, n_ic=1e4, dt=0.02, tf=1.0, testing=False, path='.'):
     """
     :param tf: final time. default is 15.
     :param dt: delta t.
@@ -98,6 +104,7 @@ def time_stepper_discrete(x_lower1, x_upper1, x_lower2, x_upper2, n_ic=1e4, dt=0
     :param x_upper2: lower bound of x2, initial condition.
     :param x_lower2: upper bound of x1, initial condition.
     :param n_ic: number of initial conditions on each axis. default is 100.
+    :param testing" boolean
     :return: csv file "ex1.csv" or "ex2.csv"
     """
     # dim - time steps, default is 51.
@@ -106,27 +113,46 @@ def time_stepper_discrete(x_lower1, x_upper1, x_lower2, x_upper2, n_ic=1e4, dt=0
     # number of initial conditions.
     n_ic = np.int(n_ic)
 
-    # create initial condition grid.
-    icond1 = np.random.uniform(x_lower1, x_upper1, n_ic)
-    icond2 = np.random.uniform(x_lower2, x_upper2, n_ic)
+    # create initial condition grid
+    if testing:
+        icond1 = np.linspace(x_lower1, x_upper1, 10)
+        icond2 = np.linspace(x_lower2, x_upper2, 2)
+        xx, yy = np.meshgrid(icond1, icond2)
 
-    # solve the system using Runge–Kutta 4th order method, see rk4 function above.
-    data_mat = np.zeros((n_ic, 2, nsteps + 1), dtype=np.float32)
-    for ii in range(n_ic):
-        data_mat[ii, :, 0] = np.array([icond1[ii], icond2[ii]], dtype=np.float32)
-        for jj in range(nsteps):
-            data_mat[ii, :, jj + 1] = rk4(data_mat[ii, :, jj], dt, dyn_sys_discrete)
+        # solve the system using Runge–Kutta 4th order method, see rk4 function above.
+        data_mat = np.zeros((n_ic, 2, nsteps + 1), dtype=np.float32)
+        ic = 0
+        for x1 in range(2):
+            for x2 in range(10):
+                data_mat[ic, :, 0] = np.array([xx[x1, x2], yy[x1, x2]], dtype=np.float32)
+                for jj in range(nsteps):
+                    data_mat[ic, :, jj + 1] = rk4(data_mat[ic, :, jj], dt, dyn_sys_discrete)
+                ic += 1
+
+    else:
+        icond1 = np.random.uniform(x_lower1, x_upper1, n_ic)
+        icond2 = np.random.uniform(x_lower2, x_upper2, n_ic)
+
+        # solve the system using Runge–Kutta 4th order method, see rk4 function above.
+        data_mat = np.zeros((n_ic, 2, nsteps + 1), dtype=np.float32)
+        for ii in range(n_ic):
+            data_mat[ii, :, 0] = np.array([icond1[ii], icond2[ii]], dtype=np.float32)
+            for jj in range(nsteps):
+                data_mat[ii, :, jj + 1] = rk4(data_mat[ii, :, jj], dt, dyn_sys_discrete)
 
     # process data for export.
-    save_data_mat = data_mat.reshape((-1, nsteps + 1), order='C')
+    sav_data_mat = data_mat.reshape((-1, nsteps + 1), order='C')
 
     # save the dataset generated in a csv file.
-    np.savetxt('discrete_dataset.csv', save_data_mat, delimiter=',')
+    # np.savetxt(path+'.csv', sav_data_mat, delimiter=',')
+
+    # save the dataset in a pickle file.
+    pickle.dump(data_mat, open(path + '.pkl', 'wb'))
 
     return data_mat
 
 
-def time_stepper_pendulum(x_lower1, x_upper1, x_lower2, x_upper2, n_ic=1e4, dt=0.02, tf=1.0):
+def time_stepper_pendulum(x_lower1, x_upper1, x_lower2, x_upper2, n_ic=10000, dt=0.02, tf=1.0, testing=False, path='.'):
     """
     :param tf: final time. default is 15.
     :param dt: delta t.
@@ -135,8 +161,11 @@ def time_stepper_pendulum(x_lower1, x_upper1, x_lower2, x_upper2, n_ic=1e4, dt=0
     :param x_upper2: lower bound of x2, initial condition.
     :param x_lower2: upper bound of x1, initial condition.
     :param n_ic: number of initial conditions
-    :return: csv file
+    :return: csv file "ex1.csv" or "ex2.csv"
     """
+    # # set seed
+    # np.random.seed(MY_SEED)
+
     # dim - time steps, default is 51.
     nsteps = np.int(tf / dt)
 
@@ -144,10 +173,17 @@ def time_stepper_pendulum(x_lower1, x_upper1, x_lower2, x_upper2, n_ic=1e4, dt=0
     n_ic = np.int(n_ic)
 
     # create initial condition grid
+    if testing:
+        # rand_x1 = np.linspace(x_lower1, x_upper1, n_ic)
+        # rand_x2 = np.linspace(x_lower2, x_upper2, n_ic)
+        rand_x1 = np.random.uniform(x_lower1, x_upper1, 100 * n_ic)
+        rand_x2 = np.random.uniform(x_lower2, x_upper2, 100 * n_ic)
+    else:
+        rand_x1 = np.random.uniform(x_lower1, x_upper1, 100 * n_ic)
+        rand_x2 = np.random.uniform(x_lower2, x_upper2, 100 * n_ic)
     max_potential = 0.99
     potential = lambda x, y: (1 / 2) * y ** 2 - np.cos(x)
-    iconds = np.asarray([[x, y] for x, y in zip(np.random.uniform(x_lower1, x_upper1, 100 * n_ic),
-                                                np.random.uniform(x_lower2, x_upper2, 100 * n_ic))
+    iconds = np.asarray([[x, y] for x, y in zip(rand_x1, rand_x2)
                          if potential(x, y) <= max_potential])[:n_ic, :]
 
     # solve the system using Runge–Kutta 4th order method, see rk4 function above.
@@ -161,12 +197,16 @@ def time_stepper_pendulum(x_lower1, x_upper1, x_lower2, x_upper2, n_ic=1e4, dt=0
     save_data_mat = data_mat.reshape((-1, nsteps + 1), order='C')
 
     # save the dataset generated in a csv file.
-    np.savetxt('pendulum.csv', save_data_mat, delimiter=',')
+    # np.savetxt(path+'.csv', save_data_mat, delimiter=',')
+
+    # save the dataset in a pickle file.
+    pickle.dump(data_mat, open(path + '.pkl', 'wb'))
 
     return data_mat
 
 
-def time_stepper_fluid_flow_slow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * np.pi, n_ic=1e4, dt=0.05, tf=6):
+def time_stepper_fluid_flow_slow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * np.pi, n_ic=1e4, dt=0.05, tf=6,
+                                 testing=False, path='.'):
     """
     :param r_lower: lower bound for r. Default is 0.
     :param r_upper: Upper bound for r. Default is 1.
@@ -177,6 +217,9 @@ def time_stepper_fluid_flow_slow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * 
     :param tf: final time. default is 6.
     :return: csv file
     """
+    # # set seed
+    # np.random.seed(MY_SEED)
+
     # dim - time steps, default is 51.
     nsteps = np.int(tf / dt)
 
@@ -193,14 +236,14 @@ def time_stepper_fluid_flow_slow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * 
     x3 = np.power(x1, 2) + np.power(x2, 2)
 
     # initialize initial conditions matrix.
-    iconds = np.zeros((n_ic, 3))
+    iconds = np.zeros((n_ic_slow, 3))
 
     # initial conditions for slow manifold.
     iconds[:n_ic_slow] = np.asarray([[x, y, z] for x, y, z in zip(x1, x2, x3)])
 
     # solve the system using Runge–Kutta 4th order method, see rk4 function above.
-    data_mat = np.zeros((n_ic, 3, nsteps + 1), dtype=np.float32)
-    for ii in range(n_ic):
+    data_mat = np.zeros((n_ic_slow, 3, nsteps + 1), dtype=np.float32)
+    for ii in range(n_ic_slow):
         data_mat[ii, :, 0] = np.array([iconds[ii, 0], iconds[ii, 1], iconds[ii, 2]], dtype=np.float32)
         for jj in range(nsteps):
             data_mat[ii, :, jj + 1] = rk4(data_mat[ii, :, jj], dt, dyn_sys_fluid)
@@ -209,7 +252,10 @@ def time_stepper_fluid_flow_slow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * 
     save_data_mat = data_mat.reshape((-1, nsteps + 1), order='C')
 
     # save the dataset generated in a csv file.
-    np.savetxt('fluid_flow_dataset.csv', save_data_mat, delimiter=',')
+    # np.savetxt(path+'.csv', save_data_mat, delimiter=',')
+
+    # save the dataset in a pickle file.
+    pickle.dump(data_mat, open(path + '.pkl', 'wb'))
 
     return data_mat
 
@@ -219,14 +265,15 @@ def time_stepper_fluid_flow_slow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * 
 # ==============================================================================
 if __name__ == "__main__":
 
-    create_discrete = False
-    create_pendulum = False
+    create_discrete = True
+    create_pendulum = True
     create_fluid_flow_slow = True
 
     if create_discrete:
         # create the dataset
         training_data = DataMaker(x_lower1=-0.5, x_upper1=0.5, x_lower2=-0.5, x_upper2=0.5,
-                                  n_ic=10000, dt=0.02, tf=5, data_type="discrete")
+                                  n_ic=10000, dt=0.02, tf=5, data_type="discrete", testing=False,
+                                  path="dataset_discrete")
         # save the dataset in a pickle file.
         pickle.dump(training_data, open('dataset_discrete.pkl', 'wb'))
 
@@ -246,7 +293,8 @@ if __name__ == "__main__":
     if create_pendulum:
         # create the dataset
         training_data = DataMaker(x_lower1=-3.1, x_upper1=3.1, x_lower2=-2, x_upper2=2,
-                                  n_ic=10000, dt=0.3, tf=15, data_type="pendulum")
+                                  n_ic=10000, dt=0.02, tf=1, data_type="pendulum", testing=False,
+                                  path="dataset_pendulum")
         # save the dataset in a pickle file.
         pickle.dump(training_data, open('dataset_pendulum.pkl', 'wb'))
 
@@ -266,7 +314,8 @@ if __name__ == "__main__":
     if create_fluid_flow_slow:
         # create the dataset
         training_data = DataMaker(x_lower1=0, x_upper1=1.1, x_lower2=0, x_upper2=2 * np.pi,
-                                  n_ic=1e4, dt=0.05, tf=6, data_type="fluid_flow_slow")
+                                  n_ic=1e4, dt=0.05, tf=6, data_type="fluid_flow_slow", testing=False,
+                                  path="dataset_fluid")
         # save the dataset in a pickle file.
         pickle.dump(training_data, open('dataset_fluid.pkl', 'wb'))
 
@@ -286,5 +335,5 @@ if __name__ == "__main__":
         ax.set_ylabel("$x_{2}$", fontsize=15)
         ax.set_zlabel("$x_{3}$", fontsize=15)
         ax.text2D(0.05, 0.95, "Fluid Flow dataset", transform=ax.transAxes, fontsize=20)
-        # plt.savefig('fluid_flow.png')
+        plt.savefig('fluid_flow.png')
         plt.show()
