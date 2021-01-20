@@ -6,8 +6,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import tensorflow as tf
 from dmd_machine.dmd_ae_machine import DMDMachine
 from dmd_machine.loss_function import LossFunction
-from data.Data import DataMaker
 from tensorflow import keras
+from data.Data import DataMaker
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import model_from_json
 from return_stats import *
@@ -48,7 +48,7 @@ hyp_params['c1'] = 1  # coefficient auto-encoder loss.
 hyp_params['c2'] = 1  # coefficient of dmd loss.
 hyp_params['c3'] = 1  # coefficient of pred loss.
 
-save_folder = "AeEx2_" + str(date.today().isoformat()) # save results in the folder " Results/save_folder"-
+save_folder = "AeEx2_longer_trajectory" + str(date.today().isoformat()) # save results in the folder " Results/save_folder"-
 # including loss curves and plot latent data.
 
 # convert input data from numpy to tensorflow.
@@ -243,8 +243,10 @@ while epoch < (hyp_params['num_epochs']):
                          file_path=os.path.join("results", save_folder, "Loss"))
 
         # save current machine.
-        myMachine.autoencoder.encoder.save(os.path.join("models", str("enc") + save_folder), save_format='save_weights')
-        myMachine.autoencoder.decoder.save(os.path.join("models", str("dec") + save_folder), save_format='save_weights')
+        myMachine.autoencoder.encoder.save(os.path.join("models", "2021", "pendulum", str("enc") + save_folder),
+                                           save_format='save_weights')
+        myMachine.autoencoder.decoder.save(os.path.join("models", "2021", "pendulum",  str("dec") + save_folder),
+                                           save_format='save_weights')
 
     epoch += 1
 

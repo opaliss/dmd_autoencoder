@@ -50,14 +50,14 @@ class Coder(keras.Model):
         x_ae = self.decode(y)
         return y, x_ae
 
-    @tf.function
+    #@tf.function
     def encode(self, x):
         y = []
         for tstep in range(x.shape[-1]):
             y.append(self.encoder(x[:, :, tstep]))
         return tf.transpose(y, perm=[1, 2, 0])
 
-    @tf.function
+    #@tf.function
     def decode(self, y):
         x = []
         for tstep in range(y.shape[-1]):

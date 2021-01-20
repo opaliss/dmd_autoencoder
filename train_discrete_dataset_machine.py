@@ -238,7 +238,8 @@ while epoch < (hyp_params['num_epochs']):
 
         # save current machine.
         try:
-            myMachine.autoencoder.save(os.path.join("models", save_folder), save_format='save_weights')
+            myMachine.autoencoder.save(os.path.join("models", "2021", "discrete", save_folder),
+                                       save_format='save_weights')
         except Exception:
             print("failed save machine. ")
 

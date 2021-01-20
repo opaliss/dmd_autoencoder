@@ -230,8 +230,10 @@ while epoch < (hyp_params['num_epochs']):
                          file_path=os.path.join("results", save_folder, "Loss"))
 
         # save current machine.
-        myMachine.autoencoder.encoder.save(os.path.join("models", str("enc") + save_folder), save_format='save_weights')
-        myMachine.autoencoder.decoder.save(os.path.join("models", str("dec") + save_folder), save_format='save_weights')
+        myMachine.autoencoder.encoder.save(os.path.join("models", "2021", "fluid",
+                                                        str("enc") + save_folder), save_format='save_weights')
+        myMachine.autoencoder.decoder.save(os.path.join("models", "2021", "fluid",
+                                                        str("dec") + save_folder), save_format='save_weights')
 
     epoch += 1
 
