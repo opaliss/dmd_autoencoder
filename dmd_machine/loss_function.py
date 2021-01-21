@@ -1,3 +1,4 @@
+""" Dynamic Mode Decomposition auto-encoder loss module. """
 from tensorflow import keras
 import tensorflow as tf
 

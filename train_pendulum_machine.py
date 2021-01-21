@@ -232,7 +232,7 @@ while epoch < (hyp_params['num_epochs']):
                          epoch_loss_avg_test.result(), time.process_time() - start_time,
                          log_file_path=os.path.join("results", save_folder, "log.txt"))
 
-    if epoch % 50 == 0:
+    if epoch % 20 == 0:
         # plot loss curves.
         create_plots_of_loss(train_dmd_loss, train_ae_loss, test_dmd_loss, test_ae_loss, train_pred_loss,
                              test_pred_loss, myLoss.c1, myLoss.c2, myLoss.c3, epoch, save_folder)
@@ -252,3 +252,4 @@ while epoch < (hyp_params['num_epochs']):
 
 # final summary of the network, again for diagnostic purposes.
 myMachine.summary()
+

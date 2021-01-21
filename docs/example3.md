@@ -16,3 +16,7 @@ The slow manifold toward the limit cycle:
 
 
 ![](images/latent_fluid_slow.PNG)
+
+
+![](images/figure6_cap.PNG)
+
