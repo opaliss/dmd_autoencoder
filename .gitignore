@@ -2,6 +2,7 @@
 *.pyc
 *.csv
 *.pkl
+*.pdf
 *.h5
 *.png
 *.DS_Store
@@ -13,3 +14,4 @@
 ./results
 ./models
 ./figures
+./lit
