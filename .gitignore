@@ -10,4 +10,6 @@
 ./scratch
 ./site
 ./docs
-
+./results
+./models
+./figures
