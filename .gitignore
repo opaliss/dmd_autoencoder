@@ -1,0 +1,13 @@
+*.idea/
+*.pyc
+*.csv
+*.pkl
+*.h5
+*.png
+*.DS_Store
+*.ipynb_checkpoints/
+*__pycache__/
+./scratch
+./site
+./docs
+
