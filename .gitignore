@@ -4,7 +4,6 @@
 *.pkl
 *.pdf
 *.h5
-*.png
 *.DS_Store
 *.ipynb_checkpoints/
 *__pycache__/
@@ -13,5 +12,4 @@
 ./docs
 ./results
 ./models
-./figures
 ./lit
