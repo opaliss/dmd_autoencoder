@@ -4,7 +4,7 @@ $$\dot{x_{1}} = \mu x_{1}$$
 
 $$\dot{x_{2}} = \lambda (x_{2} - x_{1}^{2})$$
 
-![](images/ex1_data.png)
+![](images/discrete.png)
 
 ### Analytic Koopman Embedding 
 
