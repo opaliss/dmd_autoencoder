@@ -11,6 +11,7 @@ from tensorflow import keras
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import model_from_json
 from return_stats import *
+from create_plots import create_plots_fluid_latent_2d
 from create_plots import *
 from datetime import date
 import pickle
@@ -35,7 +36,7 @@ hyp_params['num_epochs'] = 200
 # Encoding/Decoding Layer Parameters.
 hyp_params['num_en_layers'] = 3
 hyp_params['num_en_neurons'] = 80
-hyp_params['latent_dim'] = 3
+hyp_params['latent_dim'] = 2
 hyp_params['window_size'] = 256
 
 hyp_params['activation'] = 'elu'
@@ -210,8 +211,8 @@ while epoch < (hyp_params['num_epochs']):
         create_plots_fluid_pred(batch_test_data, predictions_test, hyp_params, epoch, save_folder, "test")
 
         # fluid latent space plots.
-        create_plots_fluid_latent(predictions_train, hyp_params, epoch,  save_folder, data_type="train")
-        create_plots_fluid_latent(predictions_test, hyp_params, epoch, save_folder, data_type="test")
+        create_plots_fluid_latent_2d(predictions_train, hyp_params, epoch,  save_folder, data_type="train")
+        create_plots_fluid_latent_2d(predictions_test, hyp_params, epoch, save_folder, data_type="test")
 
     if epoch % 10 == 0:
         # plot latent, input and reconstructed ae latest batch data.
