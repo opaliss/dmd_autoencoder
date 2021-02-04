@@ -1,4 +1,4 @@
-# DMD (Dynamic Mode Decomposition) Autoencoder
+# Enhancing Dynamic Mode Decomposition using Autoencoder Networks
 Prediction, estimation, and control of dynamical systems remains challenging due to nonlinearity. The Koopman operator is an infinite-dimensional linear operator that evolves the observables of a dynamical system which we approximate by the dynamic mode decomposition (DMD) algorithm. Using DMD to predict the evolution of a nonlinear dynamical system over extended time horizons requires choosing the right observable function defined on the state space. A number of DMD modifications have been developed to choose the right observable function, such as Extended DMD.  Here, we propose a simple machine learning based approach to find these coordinate transformations.
 This is done via a deep autoencoder network. This simple DMD autoencoder is tested and verified on nonlinear dynamical system time series datasets, including the pendulum and fluid flow past a cylinder.
 
@@ -22,6 +22,12 @@ https://opaliss.github.io/dmd_autoencoder/
 
 [2] [J. H. Tu, C. W. Rowley, D. M. Luchtenburg, S. L. Brunton, and J. Nathan Kutz. On dynamic mode decomposition: theory and applications. J. Comp. Dyn., 1(2):391-421, 2014.](https://arxiv.org/abs/1312.0041)
 
-
 # License
 [MIT]((https://choosealicense.com/licenses/mit/))
+
+# Authors 
+San Diego State University, Mathematics Department.
+
+This project is supervised by Professor Christopher Curtis (ccurtis@sdsu.edu).
+
+Opal Issan: opal.issan@gmail.com 

@@ -266,8 +266,8 @@ def time_stepper_fluid_flow_slow(r_lower=0, r_upper=1.1, t_lower=0, t_upper=2 * 
 if __name__ == "__main__":
 
     create_discrete = False
-    create_pendulum = True
-    create_fluid_flow_slow = False
+    create_pendulum = False
+    create_fluid_flow_slow = True
 
     if create_discrete:
         # create the dataset
@@ -314,7 +314,7 @@ if __name__ == "__main__":
     if create_fluid_flow_slow:
         # create the dataset
         training_data = DataMaker(x_lower1=0, x_upper1=1.1, x_lower2=0, x_upper2=2 * np.pi,
-                                  n_ic=1e4, dt=0.05, tf=6, data_type="fluid_flow_slow", testing=False,
+                                  n_ic=1e4, dt=0.05, tf=9, data_type="fluid_flow_slow", testing=False,
                                   path="dataset_fluid")
         # save the dataset in a pickle file.
         pickle.dump(training_data, open('dataset_fluid.pkl', 'wb'))

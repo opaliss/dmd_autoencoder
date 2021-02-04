@@ -12,7 +12,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.4">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
     
     
       
@@ -20,10 +20,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.15aa0b43.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6910b76c.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.75751829.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.196e0c26.min.css">
         
           
           
@@ -35,7 +35,7 @@
     
       
         
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
       
@@ -57,7 +57,6 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
       
   
-    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -82,20 +81,18 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
-      <div class="md-header-nav__ellipsis">
-        <div class="md-header-nav__topic">
-          <span class="md-ellipsis">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
             DMD Autoencoder
           </span>
-        </div>
-        <div class="md-header-nav__topic">
-          <span class="md-ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
             
               Pendulum Dataset
             
           </span>
         </div>
-      </div>
+      
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
@@ -154,14 +151,10 @@
         <div class="md-main__inner md-grid">
           
             
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-
-
-
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
@@ -194,7 +187,6 @@
       
 
 
-
   <li class="md-nav__item">
     <a href=".." class="md-nav__link">
       Home
@@ -205,7 +197,6 @@
       
       
       
-
 
 
   <li class="md-nav__item">
@@ -220,7 +211,6 @@
       
 
 
-
   <li class="md-nav__item">
     <a href="../model/" class="md-nav__link">
       Model
@@ -231,7 +221,6 @@
       
       
       
-
 
 
   <li class="md-nav__item">
@@ -246,7 +235,6 @@
       
 
 
-
   <li class="md-nav__item">
     <a href="../example1/" class="md-nav__link">
       Discrete Dataset
@@ -257,7 +245,6 @@
       
       
       
-
 
   
 
@@ -279,7 +266,6 @@
       
 
 
-
   <li class="md-nav__item">
     <a href="../example3/" class="md-nav__link">
       Fluid Flow Dataset
@@ -292,7 +278,6 @@
       
 
 
-
   <li class="md-nav__item">
     <a href="../hyperparams/" class="md-nav__link">
       Hyper-parameters
@@ -303,7 +288,6 @@
       
       
       
-
 
 
   <li class="md-nav__item">
@@ -343,9 +327,10 @@
 </div>
 <p>with the potential function <span><span class="MathJax_Preview">\frac{1}{2}x_{2}^{2} - \cos(x_{1})</span><script type="math/tex">\frac{1}{2}x_{2}^{2} - \cos(x_{1})</script></span>.</p>
 <p>Given the input data we measure the dynamic mode decomposition accuracy by equation (6) and (7). As a result, <span><span class="MathJax_Preview">L_{2} = 1.574 × 10^{-1}</span><script type="math/tex">L_{2} = 1.574 × 10^{-1}</script></span> and <span><span class="MathJax_Preview">L_{3} = 2.658 × 10^{-2}</span><script type="math/tex">L_{3} = 2.658 × 10^{-2}</script></span>, whereas in the latent space dataset <span><span class="MathJax_Preview">Y</span><script type="math/tex">Y</script></span>, <span><span class="MathJax_Preview">L_{2} =  1.737 × 10^{-3}</span><script type="math/tex">L_{2} =  1.737 × 10^{-3}</script></span> and <span><span class="MathJax_Preview">L_{3} = 9.51 × 10^{-4}</span><script type="math/tex">L_{3} = 9.51 × 10^{-4}</script></span>. These results show that the encoder network finds a mapping which the nonlinear dynamics become approximately linear. </p>
-<p><img alt="" src="../images/figure3_cap.PNG" /></p>
-<p>Training and Testing dataset loss curve.</p>
-<p><img alt="" src="../images/loss_curve_at_250epoch_pen.png" /></p>
+<p><img alt="" src="../images/pen_rings_ano.PNG" /></p>
+<p><img alt="" src="../images/pen_rings_doc_pred.PNG" /></p>
+<p>The pendulum system training loss curves
+<img alt="" src="../images/loss_docs_pen.PNG" /></p>
                 
               
               
@@ -412,15 +397,15 @@
       
     </div>
     
-      <script src="../assets/javascripts/vendor.93c04032.min.js"></script>
-      <script src="../assets/javascripts/bundle.83e5331e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+      <script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.8c7e0a7e.min.js"
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
