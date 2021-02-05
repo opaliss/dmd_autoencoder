@@ -24,7 +24,7 @@ class DMDMachine(keras.Model):
         y, x_ae = self.autoencoder(x=input)
 
         # compute linearity loss.
-        dmd_loss = self.get_linearity_loss(y_data=y)
+        dmd_loss = self.get_linearity_loss_reshape(y_data=y)
 
         # predict latent space using dmd fit.
         if self.window_size is None:
@@ -88,9 +88,9 @@ class DMDMachine(keras.Model):
     def dmd_loss(self, y_minus, y_plus):
         """ dmd loss = || encoder(x+) - (I - V*Vt)||^2 'for' norm."""
         Vt = self.compute_svd(y_minus)[-1]
-        I = tf.eye(Vt.shape[0])  # identity matrix
         # TODO QUICK FIX V tranpose V
         VVt = tf.linalg.matmul(Vt, tf.transpose(Vt))  # V * V transpose
+        I = tf.eye(VVt.shape[0])  # identity matrix
         loss_mat = tf.linalg.matmul(y_plus, (I - VVt))
         return self.frobenius_norm(loss_mat)
 

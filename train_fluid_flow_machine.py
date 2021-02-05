@@ -62,12 +62,13 @@ hyp_params['num_init_conds_test'] = hyp_params['num_init_conds'] - hyp_params['n
 
 # initialize machine and loss objects.
 myMachine = DMDMachine(hyp_params)
-# myMachine.autoencoder = keras.models.load_model("./models/my_model_Ex2_oct21", compile=False)
+myMachine.autoencoder.encoder = keras.models.load_model("./models/2021/fluid/encAeEx3_part2_2021-02-04", compile=False)
+myMachine.autoencoder.decoder = keras.models.load_model("./models/2021/fluid/decAeEx3_part2_2021-02-04", compile=False)
 myLoss = LossFunction(hyp_params)
 
 # Learning rate initialization.
-hyp_params["initial_learning_rate"] = 3e-3  # MAJOR PARAMETER CHOICE
-hyp_params["esteps"] = 30  # MAJOR PARAMETER CHOICE
+hyp_params["initial_learning_rate"] = 3e-4  # MAJOR PARAMETER CHOICE
+hyp_params["esteps"] = 70  # MAJOR PARAMETER CHOICE
 count = 0
 
 # clear previous run session.
@@ -220,7 +221,7 @@ while epoch < (hyp_params['num_epochs']):
                          epoch_loss_avg_test.result(), time.process_time() - start_time,
                          log_file_path=os.path.join("results", save_folder, "log.txt"))
 
-    if epoch % 50 == 0:
+    if epoch % 30 == 0:
         # plot loss curves.
         create_plots_of_loss(train_dmd_loss, train_ae_loss, test_dmd_loss, test_ae_loss, train_pred_loss,
                              test_pred_loss, myLoss.c1, myLoss.c2, myLoss.c3, epoch, save_folder)
