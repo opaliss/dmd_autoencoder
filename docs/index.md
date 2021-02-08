@@ -18,6 +18,10 @@ This is done via a deep autoencoder network. This simple DMD autoencoder is test
 
 [2] [J. H. Tu, C. W. Rowley, D. M. Luchtenburg, S. L. Brunton, and J. Nathan Kutz. On dynamic mode decomposition: theory and applications. J. Comp. Dyn., 1(2):391-421, 2014.](https://arxiv.org/abs/1312.0041)
 
+[3] [B. R. Noack, K. Afanasiev, M. Morzynski, G. Tadmor,
+and F. Thiele. A hierarchy of low-dimensional models for the transient and post-transient cylinder wake.
+Journal of Fluid Mechanics, 497:335–363, 2003.](http://www.berndnoack.com/publications/2003_JFM_Noack.pdf)
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
@@ -51,14 +55,7 @@ Mathematics Department, San Diego State University
 
 Research project under the supervision of Professor Christopher Curtis (ccurtis@sdsu.edu). 
 
-Research group: 
-
 - Opal Issan- Applied Mathematics undergraduate student (opal.issan@gmail.com)
 
-- Jay Lago- Computational Science PhD student (jaylago@gmail.com)
-
-- Joseph Diaz- Applied Mathematics Undergraduate student (joseph.a.g.diaz@gmail.com)
-
-- Robby Simpson- Applied Mathematics Masters student (robby.c.simpson@gmail.com)
 
 

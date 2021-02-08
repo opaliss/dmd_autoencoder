@@ -22,6 +22,9 @@ https://opaliss.github.io/dmd_autoencoder/
 
 [2] [J. H. Tu, C. W. Rowley, D. M. Luchtenburg, S. L. Brunton, and J. Nathan Kutz. On dynamic mode decomposition: theory and applications. J. Comp. Dyn., 1(2):391-421, 2014.](https://arxiv.org/abs/1312.0041)
 
+[3] [B. R. Noack, K. Afanasiev, M. Morzynski, G. Tadmor,and F. Thiele. A hierarchy of low-dimensional models for the transient and post-transient cylinder wake.
+Journal of Fluid Mechanics, 497:335–363, 2003.](http://www.berndnoack.com/publications/2003_JFM_Noack.pdf)
+
 # License
 [MIT]((https://choosealicense.com/licenses/mit/))
 
